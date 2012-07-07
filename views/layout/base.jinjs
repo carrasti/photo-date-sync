@@ -1,0 +1,23 @@
+{% extends "html.jinjs" %}
+
+{% block header_title %}Photo date sync{% endblock %}
+
+
+{% block page_header %}
+    <div class="logo">
+    <h1>Photo data sync</h1>
+    <div class="tagline">putting your friends pictures together</div>
+    </div>
+    <div class="step">
+        <ul>
+            <li><span>select folders</span></li>
+            <li><span>align picture times</span></li>
+            <li><span>review</span></li>
+            <li><span>save the changes</span></li>
+        </ul>
+        {% block currentstep %}{% endblock %}</div>
+{% endblock %}
+
+{% block page_footer %}
+    <span class="author">Carlos Arrastia, 2012</span>
+{% endblock %}
