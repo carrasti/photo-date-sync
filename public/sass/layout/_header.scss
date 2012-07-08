@@ -1,0 +1,80 @@
+.logo{
+    position:absolute;
+    left:10px;
+    top:10px;
+    h1{
+        font-size:30px;
+        font-family:Sans-serif;
+        @include text-shadow(1px 1px 1px  #A0A0A0);
+        &.icon:before{
+            margin-right:10px;
+            font-size:50px;
+            float:left;
+        }
+    }
+    .tagline{
+        font-size:13px;
+        padding-left:54px;
+        color:#666666;
+        font-style:italic;
+        margin-top:2px;
+        @include text-shadow(1px 1px 1px  #FFFFFF);
+    }
+}
+.tools{
+    position:absolute;
+    z-index:4;
+    right:10px;
+    top:10px;
+    left:350px;
+    li{
+        width:40px;
+        height:40px;
+        @include border-radius(50px);
+        display:block;
+        float:left;
+        background-color:#999;
+        margin-right:40px;
+        position:relative;
+        cursor:pointer;
+        &.icon:before{
+            color:white;
+            font-size:26px;
+            display:block;
+            margin:8px;
+        }
+        
+        span{
+            font-weight:bold;
+            color:#777;
+            display:block;
+            position:absolute;
+            bottom:-1em;
+            left:-30px;
+            width:100px;
+            text-align:center;
+            font-size:12px;
+            visibility:hidden;
+            opacity:0;
+            @include transition(opacity 0.4s,visibility 0s ease 0.4s);
+            @include text-shadow(0 0 2px #FFF);
+        }
+        
+        //default transitions
+        @include transition(background-color 0.4s, box-shadow 0.4s);
+        
+        
+        //mousover styles
+        &:hover{
+            background-color:#777;
+            @include box-shadow(0 0 4px #444);
+            @include transition(background-color 0.4s, box-shadow 0.4s);
+            span{
+                @include transition(opacity 0.4s);
+                visibility:visible;
+                opacity:1;
+            }
+            
+        }
+    }
+}

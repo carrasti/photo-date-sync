@@ -1,0 +1,24 @@
+@font-face {
+  font-family: PhotoSyncIcons;
+  src: url("photosync_icons.ttf");
+}
+
+/* line 7, ../../sass/fonticons/photosync_icons.scss */
+.icon:before {
+  font-family: 'PhotoSyncIcons';
+}
+
+/* line 10, ../../sass/fonticons/photosync_icons.scss */
+.icon-pictures:before {
+  content: '\0021';
+}
+
+/* line 11, ../../sass/fonticons/photosync_icons.scss */
+.icon-folder:before {
+  content: '\0022';
+}
+
+/* line 12, ../../sass/fonticons/photosync_icons.scss */
+.icon-exit:before {
+  content: '\0023';
+}

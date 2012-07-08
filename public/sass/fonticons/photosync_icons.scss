@@ -1,0 +1,12 @@
+
+@font-face {
+font-family: PhotoSyncIcons;
+src: url('photosync_icons.ttf');
+}
+
+.icon:before {
+font-family: 'PhotoSyncIcons';
+}
+.icon-pictures:before {content: '\0021';}
+.icon-folder:before {content: '\0022';}
+.icon-exit:before {content: '\0023';}

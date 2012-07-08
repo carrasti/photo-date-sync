@@ -2,6 +2,7 @@
 
 {% block javascripts %}
 <script type="text/javascript" src="/js/libs/jquery.tmpl.js"></script>
+<script type="text/javascript" src="/js/photohandler.js"></script>
 <script type="text/javascript" src="/js/app.js"></script>
 <script type="text/javascript" src="/js/step1.js"></script>
 <script type="text/javascript" src="/js/step2.js"></script>
@@ -9,51 +10,8 @@
 {% endblock %}
 
 {% block content %}
-<script id="tplPhotoAlignRow" type="text/x-jquery-tmpl">
-    <li>
-        <div class="directoryselect"></div>
-        <div class="photostream"></div>
-        <div class="timediff"></div>
-    </li>
-</script>
-<script id="tplDirectoryselectEmpty" type="text/x-jquery-tmpl">
-    <div class="emptydir">select a directory</div>
-</script>
-<script id="tplDirectoryselectSelected" type="text/x-jquery-tmpl">
-    <div class="selecteddir">
-        <div class="directory">
-            <span class="dirname">${dirname}</span><span class="basename">${basename}</span>
-        </div>
-        <div class="delete">
-            <span>delete</span>
-        </div>
+    <div id="photoSync">
     </div>
-</script>
-
-<script id="tplPhotoGroup" type="text/x-jquery-tmpl">
-    <div class="group" ">
-        <div class="details"><span class="camera">${camera}</span>
-        <div class="photostream"><ul></ul></div>
+    <div id="photoSavesave">
     </div>
-</script>
-
-<script id="tplImage" type="text/x-jquery-tmpl">
-    <div class="photostream-image">
-        <img src="data:image/gif;base64,${thumbnail}">
-        <span class="name">${name}</span><span class="date">${date}</span>
-    </div>
-</script>
-
-
-<div id="photoSync">
-    <div class="directories"><ul></ul></div>
-    <div class="photos"></div>
-</div>
-<div id="photoSavesave">
-</div>
-
-</div>
-
-
-
 {% endblock %}

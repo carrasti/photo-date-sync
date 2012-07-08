@@ -2,20 +2,27 @@
 
 {% block header_title %}Photo date sync{% endblock %}
 
+{% block css_styles %}
+<link rel="stylesheet" href="css/screen.css">
+{% endblock %}
+
 
 {% block page_header %}
-    <div class="logo">
-    <h1>Photo data sync</h1>
+    <div class="logo ">
+    {% block page_header_logo %}
+    <h1 class="icon icon-pictures">Photo data sync</h1>
     <div class="tagline">putting your friends pictures together</div>
+    {% endblock %}
     </div>
-    <div class="step">
+    
+    <div class="tools">
+        {% block page_header_tools %}
         <ul>
-            <li><span>select folders</span></li>
-            <li><span>align picture times</span></li>
-            <li><span>review</span></li>
-            <li><span>save the changes</span></li>
+            {% block page_header_tools_items %}
+            {% endblock %}
         </ul>
-        {% block currentstep %}{% endblock %}</div>
+        {% endblock %}
+    </div>
 {% endblock %}
 
 {% block page_footer %}

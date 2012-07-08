@@ -1,7 +1,14 @@
+
+
+
+
+
+
+
 var photoSyncStep1 = {
     data : undefined,
     init : function(opts) {
-        this.data = {};
+        this.photoHandler = new PhotoHandler();
         $('#content > div').each(function(index, item) {
             var it = $(item);
             it.removeClass('active');
@@ -9,42 +16,50 @@ var photoSyncStep1 = {
                 it.addClass('active');
             }
         });
-
-
-        this.addDirectory({
+        this.initTools();
+        
+        $.tmpl('sortPage',{}).appendTo('#photoSync');
+        
+        /*this.addDirectory({
             path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus'
+        });*/
+        
+        this.addDirectory({
+            path : '/media/EXTRA/PHOTOS/2012/2012_04_28_05_01_Poland'
         });
         /*this.addDirectory({
-            path : '/media/EXTRA/PHOTOS/2012/2012_04_28_05_01_Poland'
+            path : '/media/EXTRA/PHOTOS/2011/2011_09_28-10-16_Belgium_Madrid'
         });*/
         
 
     },
+    initTools:function(){
+        
+        var tools=[{
+            text: 'Add directory',
+            cls: 'add_dir icon icon-folder'
+        },{
+            text: 'New project',
+            cls: 'new_project icon icon-exit'
+        }];
+        
+        var toolsUl=$('header .tools ul');
+        $.tmpl('tools',{tools:tools}).appendTo(toolsUl);
+    },
     addDirectory : function(pathOpts) {
-        var ulEl = $('#photoSync > .directories > ul');
-        var newRowNum = ulEl.children().length;
-        $("#tplPhotoAlignRow").tmpl({}).appendTo(ulEl);
-
         if (pathOpts) {
-            this.setDirectory(newRowNum, pathOpts);
+            this.setDirectory(pathOpts);
         } else {
-            this.setEmptyDirectory(newRowNum);
+            //search
         }
     },
-    setEmptyDirectory : function(rowNum) {
-        var liEl = $('#photoSync > .directories > ul > li')[rowNum];
-        $("#tplDirectoryselectEmpty").tmpl({}).appendTo(liEl);
-    },
-    setDirectory : function(rowNum, pathOpts) {
-        var liEl = $('#photoSync > .directories > ul > li')[rowNum];
-        var directory = $(liEl).find(".directoryselect")[0]
+    setDirectory : function(pathOpts) {
         var parts = pathOpts.path.split('/');
         var data = {
             basename : parts.pop(),
             dirname : parts.join('/')
         };
 
-        $("#tplDirectoryselectSelected").tmpl(data).appendTo(directory);
         this.requestImages(pathOpts.path);
     },
     requestImages : function(path) {
@@ -61,7 +76,10 @@ var photoSyncStep1 = {
     requestImagesResponse : function(data, textStatus, response) {
         for ( var key in data.files) {
             var it = data.files[key];
-            var date = it['Exif.Image.DateTime'];
+            var date = it['Exif.Photo.DateTimeDigitized'];
+            if (!date){
+                continue;
+            }
             var parts = date.match(/(\d+):(\d+):(\d+) (\d+):(\d+):(\d+)/);
             date = new Date(parseInt(parts[1], 10), parseInt(parts[2], 10)-1, parseInt(parts[3], 10), parseInt(parts[4], 10), parseInt(parts[5], 10), parseInt(parts[6], 10));
             var o = {
@@ -71,38 +89,39 @@ var photoSyncStep1 = {
                 camera : it['Exif.Image.Make'],
                 model : it['Exif.Image.Model']
             };
-            this.data[key] = o;
+            this.photoHandler.addPhoto(o);
         };
-        this.groupByCamera();
-
+        this.photoHandler.sortByDate(data);
+        this.updateUi();
     },
-    groupByCamera : function() {
-        var photosEl = $('#photoSync > .photos');
-        var tplPhotoGroup = $('#tplPhotoGroup');
-        var tplImage = $('#tplImage');
+    updateUi : function() {
+        var photosEl = $('#photoSync .photos-ct');
+        var camerasEl = $('#photoSync .cameras > ul');
+        
+        var pH=this.photoHandler;
+        
+        pH.calculatePhotoTimelinePercents();
+        
+        /* start 1000 pixels for 30 minutes */
+        var thirtyMinutes=600000;
+        var photosElWidth=Math.ceil((pH.timelineLength/thirtyMinutes)*1000);
+        photosEl.width(photosElWidth);
+        
         photosEl.html('');
-        var groups = {};
-        for ( var key in this.data) {
-            var it = this.data[key];
-            var camera = it.camera + ' ' + it.model;
-            if (!groups.hasOwnProperty(camera)) {
-                groups[camera] = [];
-            }
-            groups[camera].push(it);
-        }
-        for ( var g in groups) {
-            var group = groups[g];
-            group.sort(function(a, b) {
-                return a.date.getTime() - b.date.getTime();
-            });
-            var el = tplPhotoGroup.tmpl({
+        for ( var g in pH.photosByCamera) {
+            var group = pH.photosByCamera[g];
+            // add the row
+            var el = $.tmpl('photoRow',{}).appendTo(photosEl);
+            //add the camera
+            $.tmpl('camera',{
                 camera : g
-            }).appendTo(photosEl);
-            var imagePh = el.find('.photostream > ul');
-            for ( var file in group) {
-                tplImage.tmpl(group[file]).appendTo(imagePh);
-            }
-
+            }).appendTo(camerasEl);
+            
+            var imagePh = el.find('ul');
+            $.each(group,function(index,file){
+                file.el=$.tmpl('photo',file).appendTo(imagePh);
+                file.el.css('left',file.pct+"%");
+            });
         }
     }
 };

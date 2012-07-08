@@ -1,0 +1,15 @@
+body{
+    font-family:sans-serif;
+}
+
+#page-wrapper {
+    background:#F0F0F0;
+    @include border-radius(10px);
+    @include box-shadow(#A0A0A0 1px 1px 4px );
+    position:absolute;
+    top:10px;
+    bottom:20px;
+    left:10px;
+    right:10px;
+    overflow:auto;
+}

@@ -29,8 +29,8 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get(/\/photolist\/?/, routes.photoList);
-app.get(/\/photo(.*)/, routes.fsList);
+app.get(/^\/photolist\/?/, routes.photoList);
+app.get(/^\/photo(.*)/, routes.fsList);
 app.get('/', routes.index);
 
 
