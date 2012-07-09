@@ -317,13 +317,21 @@ footer {
   overflow-y: hidden;
   background-color: #F9F9F9;
 }
-/* line 83, ../sass/app/_photosync.scss */
-#photoSync .photostream ul {
+/* line 82, ../sass/app/_photosync.scss */
+#photoSync .photostream {
   position: relative;
   height: 179px;
   border-bottom: 1px solid #E9E9E9;
+  width: 100%;
 }
 /* line 87, ../sass/app/_photosync.scss */
+#photoSync .photostream ul {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 0, 0.15);
+}
+/* line 92, ../sass/app/_photosync.scss */
 #photoSync .photostream ul li {
   position: absolute;
   top: 0px;

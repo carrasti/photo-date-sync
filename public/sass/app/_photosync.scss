@@ -79,14 +79,21 @@ $timeadjust-width:100px;
         overflow-y:hidden;
         background-color:#F9F9F9; 
     }
-    
-    .photostream ul{
+    .photostream{
         position:relative;
         height:$row-height - 1;
         border-bottom:1px solid #E9E9E9;
-        li{
+        width:100%;
+        ul{
             position:absolute;
-            top:0px;
+            top:0;
+            bottom:0;
+            background-color:transparentize(#FFFF00, 0.85);
+            li{
+                position:absolute;
+                top:0px;
+            }
         }
     }
+     
 }

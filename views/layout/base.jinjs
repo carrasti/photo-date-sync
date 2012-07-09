@@ -10,7 +10,7 @@
 {% block page_header %}
     <div class="logo ">
     {% block page_header_logo %}
-    <h1 class="icon icon-pictures">Photo data sync</h1>
+    <h1 class="icon icon-pictures">Photo date sync</h1>
     <div class="tagline">putting your friends pictures together</div>
     {% endblock %}
     </div>
