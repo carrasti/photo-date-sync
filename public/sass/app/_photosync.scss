@@ -86,17 +86,20 @@ $timeadjust-width:100px;
     .photostream{
         position:relative;
         height:$row-height - 1;
-        border-bottom:1px solid #E9E9E9;
+        border-bottom:2px solid #F0F0F0;
         width:100%;
         ul{
             position:absolute;
             top:0;
             bottom:0;
             background-color:transparentize(#FFFF00, 0.85);
+            width:auto !important;
             li{
                 position:absolute;
                 top:0px;
                 bottom:0px;
+                width:200px;
+                
                 &:nth-child(3n+2){
                     top:8%;
                 }
@@ -113,7 +116,7 @@ $timeadjust-width:100px;
         span.image{
             position:absolute;
             top:0;
-            left:0;
+            left:-50%;
             display:block;
             background:white;
             @include box-shadow(#AAA 1px 1px 3px);

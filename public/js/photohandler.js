@@ -31,16 +31,16 @@ PhotoGroup.prototype.addPhoto = function(photo) {
 };
 PhotoGroup.prototype.calculatePcts = function(startTs, endTs) {
     var firstTs = this.getFirst().getTs();
-    var lastTs = this.getFirst().getTs();
+    var lastTs = this.getLast().getTs();
     return [ PhotoUtil.calculatePct(firstTs, startTs, endTs), PhotoUtil.calculatePct(lastTs, startTs, endTs) ];
 };
 PhotoGroup.prototype.setPcts = function(pctFirst, pctLast) {
     this.details.pctFirst = pctFirst;
     this.details.pctLast = pctLast;
     if (this.elPhotos) {
+        console.debug(this.name,this.details.pctFirst,this.details.pctLast);
         $(this.elPhotos).css('left', this.details.pctFirst + '%');
-        $(this.elPhotos).width((100-(this.details.pctLast+this.details.pctFirst))+'%');
-        //$(this.elPhotos).css('right', this.details.pctLast + '%');
+        $(this.elPhotos).css('right', (100-this.details.pctLast) + '%');
     }
 };
 PhotoGroup.prototype.updatePcts = function(startTs, endTs) {
