@@ -14,8 +14,9 @@ var photoSyncStep1 = {
         var el = $.tmpl('sortPage', {}).appendTo('#photoSync');
         var photoCt = el.find('.photo-ct-outer');
 
-        // this.addDirectory({ path :
-        // '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Nicole' });
+        this.addDirectory({
+            path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Nicole'
+        });
         this.addDirectory({
             path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Tiina'
         });
@@ -97,9 +98,8 @@ var photoSyncStep1 = {
         var camerasEl = $('#photoSync .cameras > ul');
 
         var pH = this.photoHandler;
-
-        photosEl.html('');
         $.each(pH.photosByCamera, function(g, group) {
+
             if (!group.elPhotos) {
                 var el = $.tmpl('photoRow', {}).appendTo(photosEl);
                 // add the row and update the element for the camera
@@ -116,7 +116,7 @@ var photoSyncStep1 = {
                     })(o),
                     drag : (function(originalPos) {
                         return function(event, ui) {
-                            console.debug(originalPos.left);
+
                         };
                     })(o)
                 });
@@ -133,7 +133,7 @@ var photoSyncStep1 = {
                 }
             });
         });
-
+        
         // calculate all percents and put
         pH.updateUi();
 
@@ -142,29 +142,43 @@ var photoSyncStep1 = {
         var photosElWidth = Math.ceil((pH.timelineLength / thirtyMinutes) * 1000);
         photosEl.width(photosElWidth);
         
+        //set vertical heights
+        $('#photoSync .distribute-height').height((100/camerasEl.children().length)+'%');
         
-        var photoCt=photosEl.parent();
+        var photoCt = photosEl.parent();
         photoCt.unbind('mousewheel');
         var scaleO = {
-                originalWidth : photosEl.width(),
-                currentScale : 0
-            };
+            originalWidth : photosEl.width(),
+            currentScale : 0,
+            photosEl : photosEl
+        };
         photoCt.mousewheel((function(o) {
             return function(event, delta, deltaX, deltaY) {
-                var nextCurrentScale=o.currentScale+(delta/2);
-                var nextWidth=o.originalWidth*Math.exp((o.currentScale) / 10);
-                var tgt = $(event.currentTarget);
-                var photos=tgt.find('.photostream');
-                console.debug(nextWidth);
-                if (delta<0 && nextWidth < tgt.width()){
-                    photos.width(tgt.width());
-                }else{
-                    o.currentScale=nextCurrentScale;
-                    photos.width(nextWidth);
+                var ct = o.photosEl, scrollEl = ct.parent();
+
+                event.preventDefault();
+                event.stopPropagation();
+
+
+                if (!event.shiftKey) {
+                    scrollEl.stop(false, true);
+                    scrollEl.animate({
+                        scrollLeft : scrollEl.scrollLeft() - (delta * scrollEl.width() / 3.3)
+                    }, 100);
+                } else {
+                    ct.stop(false, true);
+                    var nextCurrentScale = o.currentScale + (delta / 2);
+                    var nextWidth = o.originalWidth * Math.exp((o.currentScale) / 10);
+                    if (delta < 0 && nextWidth < scrollEl.width()) {
+                        ct.animate({width:scrollEl.width()+1},100);
+                    } else {
+                        o.currentScale = nextCurrentScale;
+                        ct.animate({width:nextWidth},100);
+                    }
                 }
-                
+
             };
         })(scaleO));
-        
+
     }
 };

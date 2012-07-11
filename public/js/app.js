@@ -15,13 +15,13 @@ $.template('sortPage', '\
     </div>\
     <div class="timeline"></div>\
     <div class="wizardnav"></div>');
-$.template('photoRow', '<div class="photostream"><ul></ul></div>');
+$.template('photoRow', '<div class="distribute-height photostream"><ul></ul></div>');
 $.template('photo', '\
     <li class="photostream-image">\
         <span class="image"><img src="data:image/gif;base64,${thumbnail}"></span>\
         <span class="metadata"><span class="name">${name}</span><span class="date">${date}</span></span>\
     </li>');
-$.template('camera', '<li class="cameramodel"><span>${camera}</span></li>');
+$.template('camera', '<li class="distribute-height cameramodel"><span>${camera}</span></li>');
         
 
 /* create a singleton photosync object */

@@ -1,1 +1,8 @@
 @import "photosync";
+
+.ui-draggable{
+    @include special-cursor(grab);
+}
+.ui-draggable-dragging{
+    @include special-cursor(grabbing);
+}

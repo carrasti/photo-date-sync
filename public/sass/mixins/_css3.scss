@@ -1,0 +1,6 @@
+@mixin special-cursor($name) {
+    cursor : $name;
+    @each $browser in -moz-,-webkit-{
+        cursor: $browser + $name;
+    }
+}
