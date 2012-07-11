@@ -247,8 +247,7 @@ footer {
   bottom: 60px;
   left: 0px;
   right: 0px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -256,16 +255,21 @@ footer {
   border-radius: 2px;
   border: 1px solid #E0E0E0;
 }
-/* line 27, ../sass/app/_photosync.scss */
+/* line 26, ../sass/app/_photosync.scss */
 #photoSync .cameras {
   position: absolute;
   top: 0;
-  left: 0px;
+  left: 0;
+  bottom: 0;
   width: 30px;
   z-index: 100;
   background: #F0F0F0;
 }
-/* line 35, ../sass/app/_photosync.scss */
+/* line 34, ../sass/app/_photosync.scss */
+#photoSync .cameras ul {
+  height: 100%;
+}
+/* line 36, ../sass/app/_photosync.scss */
 #photoSync .cameras ul li {
   height: 178px;
   display: block;
@@ -276,28 +280,28 @@ footer {
   overflow: hidden;
   position: relative;
 }
-/* line 44, ../sass/app/_photosync.scss */
+/* line 45, ../sass/app/_photosync.scss */
 #photoSync .cameras ul li span {
-  -webkit-transform: rotate(270deg);
-  -moz-transform: rotate(270deg);
-  -ms-transform: rotate(270deg);
-  -o-transform: rotate(270deg);
-  transform: rotate(270deg);
-  -webkit-transform-origin: 50% 0;
-  -moz-transform-origin: 50% 0;
-  -ms-transform-origin: 50% 0;
-  -o-transform-origin: 50% 0;
-  transform-origin: 50% 0;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  transform-origin: 0 0;
   position: absolute;
   top: 0px;
   left: 30px;
   diplay: block;
   width: 500px;
-  left: -240px;
-  top: 90px;
-  text-align: center;
+  left: 6px;
+  top: 98%;
+  text-align: left;
 }
-/* line 61, ../sass/app/_photosync.scss */
+/* line 62, ../sass/app/_photosync.scss */
 #photoSync .timeadjust {
   position: absolute;
   right: 0px;
@@ -307,32 +311,92 @@ footer {
   background-color: #F0F0F0;
   z-index: 100;
 }
-/* line 72, ../sass/app/_photosync.scss */
+/* line 73, ../sass/app/_photosync.scss */
 #photoSync .photo-ct-outer {
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 30px;
   right: 100px;
   overflow-x: hidden;
   overflow-y: hidden;
   background-color: #F9F9F9;
 }
-/* line 82, ../sass/app/_photosync.scss */
+/* line 83, ../sass/app/_photosync.scss */
+#photoSync .photos-ct {
+  height: 100%;
+}
+/* line 86, ../sass/app/_photosync.scss */
 #photoSync .photostream {
   position: relative;
   height: 179px;
   border-bottom: 1px solid #E9E9E9;
   width: 100%;
 }
-/* line 87, ../sass/app/_photosync.scss */
+/* line 91, ../sass/app/_photosync.scss */
 #photoSync .photostream ul {
   position: absolute;
   top: 0;
   bottom: 0;
   background-color: rgba(255, 255, 0, 0.15);
 }
-/* line 92, ../sass/app/_photosync.scss */
+/* line 96, ../sass/app/_photosync.scss */
 #photoSync .photostream ul li {
   position: absolute;
   top: 0px;
+  bottom: 0px;
+}
+/* line 100, ../sass/app/_photosync.scss */
+#photoSync .photostream ul li:nth-child(3n+2) {
+  top: 8%;
+}
+/* line 103, ../sass/app/_photosync.scss */
+#photoSync .photostream ul li:nth-child(3n+3) {
+  top: 16%;
+}
+/* line 106, ../sass/app/_photosync.scss */
+#photoSync .photostream ul li:nth-child(3n+4) {
+  top: 24%;
+}
+/* line 113, ../sass/app/_photosync.scss */
+#photoSync .photostream span.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  background: white;
+  -webkit-box-shadow: #aaaaaa 1px 1px 3px;
+  -moz-box-shadow: #aaaaaa 1px 1px 3px;
+  box-shadow: #aaaaaa 1px 1px 3px;
+  padding: 8px;
+  cursor: default;
+}
+/* line 121, ../sass/app/_photosync.scss */
+#photoSync .photostream span.image img {
+  -webkit-box-shadow: #cccccc 0 0 2px;
+  -moz-box-shadow: #cccccc 0 0 2px;
+  box-shadow: #cccccc 0 0 2px;
+  display: block;
+}
+/* line 125, ../sass/app/_photosync.scss */
+#photoSync .photostream span.image:hover {
+  z-index: 10;
+}
+/* line 131, ../sass/app/_photosync.scss */
+#photoSync .photostream span.metadata {
+  display: none;
+}
+
+/* line 3, ../sass/app/_base.scss */
+.ui-draggable {
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+/* line 6, ../sass/app/_base.scss */
+.ui-draggable-dragging {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
 }
