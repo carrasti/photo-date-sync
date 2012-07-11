@@ -1,6 +1,8 @@
 var photoSyncStep1 = {
     data : undefined,
     init : function(opts) {
+        opts=opts||{};
+
         this.photoHandler = new PhotoHandler();
         $('#content > div').each(function(index, item) {
             var it = $(item);
@@ -11,15 +13,17 @@ var photoSyncStep1 = {
         });
         this.initTools();
 
+        this.scale=opts.scale || 4;
+
         var el = $.tmpl('sortPage', {}).appendTo('#photoSync');
         var photoCt = el.find('.photo-ct-outer');
 
         this.addDirectory({
-            path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Nicole'
+            path : '/home/arrastia/Desktop/2012_06_22-23_Juhannus'
         });
-        this.addDirectory({
+        /*this.addDirectory({
             path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Tiina'
-        });
+        });*/
 
         /*
          * this.addDirectory({ path :
@@ -111,12 +115,19 @@ var photoSyncStep1 = {
 
                     start : (function(originalPos) {
                         return function(event, ui) {
-                            originalPos.left = ui.helper.css('left');
+                            originalPos.leftCss = ui.helper.css('left');
+                            originalPos.rightCss = ui.helper.css('right');
+                            originalPos.left = ui.helper.offset().left-ui.helper.parent().offset().left
                         };
                     })(o),
                     drag : (function(originalPos) {
                         return function(event, ui) {
-
+                            var pct=originalPos.leftCss.split("%")[0];
+                            var pctr=originalPos.leftCss.split("%")[0];
+                            var newpct=(ui.helper.offset().left/originalPos.left)*pct;
+                            var diff = newpct - pct;
+                            console.debug(pctr+diff)+'%'
+                            ui.helper.css('right',(pctr+diff)+'%')
                         };
                     })(o)
                 });
@@ -133,24 +144,22 @@ var photoSyncStep1 = {
                 }
             });
         });
-        
+
         // calculate all percents and put
         pH.updateUi();
 
-        /* start 1000 pixels for 30 minutes */
-        var thirtyMinutes = 600000;
-        var photosElWidth = Math.ceil((pH.timelineLength / thirtyMinutes) * 1000);
-        photosEl.width(photosElWidth);
-        
+        // change size according to the full timeline size
+        this.adjustWidthToScale(undefined,undefined,undefined,true);
+
         //set vertical heights
         $('#photoSync .distribute-height').height((100/camerasEl.children().length)+'%');
-        
+
         var photoCt = photosEl.parent();
         photoCt.unbind('mousewheel');
         var scaleO = {
             originalWidth : photosEl.width(),
-            currentScale : 0,
-            photosEl : photosEl
+            photosEl : photosEl,
+            controllerO:this
         };
         photoCt.mousewheel((function(o) {
             return function(event, delta, deltaX, deltaY) {
@@ -161,24 +170,43 @@ var photoSyncStep1 = {
 
 
                 if (!event.shiftKey) {
+                    //scroll
                     scrollEl.stop(false, true);
                     scrollEl.animate({
                         scrollLeft : scrollEl.scrollLeft() - (delta * scrollEl.width() / 3.3)
                     }, 100);
                 } else {
-                    ct.stop(false, true);
-                    var nextCurrentScale = o.currentScale + (delta / 2);
-                    var nextWidth = o.originalWidth * Math.exp((o.currentScale) / 10);
-                    if (delta < 0 && nextWidth < scrollEl.width()) {
-                        ct.animate({width:scrollEl.width()+1},100);
-                    } else {
-                        o.currentScale = nextCurrentScale;
-                        ct.animate({width:nextWidth},100);
-                    }
+                    //scale
+                    o.controllerO.adjustWidthToScale(undefined,delta,event.pageX-scrollEl.offset().left,true);
                 }
-
             };
         })(scaleO));
+    },
+    adjustWidthToScale:function(scale,delta,offset,animate){
+        delta=delta||0;
+        animate=animate||false;
+        var newScale=scale||(Math.min(TIME_PRECISION.length,Math.max(0,this.scale+delta)));
+        this.scale=newScale;
+        var pH=this.photoHandler,scrollEl = $('#photoSync .photo-ct-outer'), ctEl=scrollEl.find('.photos-ct');
+        var visibleAreaWidth=scrollEl.width()
+        //offset=offset||Math.floor(visibleAreaWidth/2);
+        offset=offset||0;
+        var availableScreenWidth=window.screen.width-($(document).width()-visibleAreaWidth);
+        var oldWidth=ctEl.width();
+        var newWidth=Math.ceil((pH.timelineLength / TIME_PRECISION[this.scale]) * availableScreenWidth);
+        var widthChangePct=newWidth/oldWidth;
+        var currentScrollLeft=scrollEl.scrollLeft();
+
+        var newScrollLeft=Math.floor(((currentScrollLeft+offset)*widthChangePct)-offset);
+
+        if (animate){
+            ctEl.stop();
+            ctEl.animate({width:newWidth},100);
+            scrollEl.animate({scrollLeft:newScrollLeft},100);
+        }else{
+            ctEl.width(newWidth);
+            scrollEl.scrollLeft(newScrollLeft);
+        }
 
     }
 };
