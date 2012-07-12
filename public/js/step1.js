@@ -13,7 +13,7 @@ var photoSyncStep1 = {
         });
         this.initTools();
 
-        this.scale=opts.scale || 4;
+        this.scale=opts.scale || 10;//4;
 
         var el = $.tmpl('sortPage', {}).appendTo('#photoSync');
         var photoCt = el.find('.photo-ct-outer');
@@ -109,25 +109,57 @@ var photoSyncStep1 = {
                 // add the row and update the element for the camera
                 group.elPhotos = el.find('ul');
 
-                var o = {};
+                var o = {
+                        initializeDrag:function(el){
+                            this.el=el;
+                            this.leftPct = parseFloat(el.css('left').split('%')[0]);
+                            this.rightPct = parseFloat(el.css('right').split('%')[0]);
+                            this.leftPx = el.position().left;
+                            this.lastLeftPx=0;
+
+                        },
+                        endDrag:function(){
+
+                        },
+                        calculatePctDiff:function(posPx){
+                            var pct=this.leftPct;
+                            console.debug('before:',posPx);
+                            posPx=posPx||this.el.position().left;
+                            console.debug('after:',posPx);
+                            this.lastLeftPx=posPx;
+                            var newpct=(posPx/this.leftPx)*pct;
+                            var diff = pct - newpct;
+                            return diff;
+                        },
+                        updateRightPct:function(diffPct){
+                            diffPct=diffPct||this.calculatePctDiff();
+                            this.el.css('right',(this.rightPct+diffPct)+'%');
+                        },
+                        updateLeftPct:function(diffPct){
+                            diffPct=diffPct||this.calculatePctDiff();
+                            this.el.css('left',(this.leftPct-diffPct)+'%');
+                        }
+                };
                 $(group.elPhotos[0]).draggable({
                     axis : "x",
 
-                    start : (function(originalPos) {
+                    start : (function(o) {
                         return function(event, ui) {
-                            originalPos.leftCss = ui.helper.css('left');
-                            originalPos.rightCss = ui.helper.css('right');
-                            originalPos.left = ui.helper.offset().left-ui.helper.parent().offset().left
+                            o.initializeDrag(ui.helper);
+                        };
+
+                    })(o),
+                    drag : (function(o) {
+                        return function(event, ui) {
+                            o.updateRightPct();
                         };
                     })(o),
-                    drag : (function(originalPos) {
+                    stop : (function(o) {
                         return function(event, ui) {
-                            var pct=originalPos.leftCss.split("%")[0];
-                            var pctr=originalPos.leftCss.split("%")[0];
-                            var newpct=(ui.helper.offset().left/originalPos.left)*pct;
-                            var diff = newpct - pct;
-                            console.debug(pctr+diff)+'%'
-                            ui.helper.css('right',(pctr+diff)+'%')
+                            console.debug('last');
+                            var diffPct=o.calculatePctDiff(o.lastLeftPx);
+                            o.updateRightPct(diffPct);
+                            o.updateLeftPct(diffPct);
                         };
                     })(o)
                 });
@@ -189,8 +221,8 @@ var photoSyncStep1 = {
         this.scale=newScale;
         var pH=this.photoHandler,scrollEl = $('#photoSync .photo-ct-outer'), ctEl=scrollEl.find('.photos-ct');
         var visibleAreaWidth=scrollEl.width()
-        //offset=offset||Math.floor(visibleAreaWidth/2);
-        offset=offset||0;
+        offset=offset||Math.floor(visibleAreaWidth/2);
+        //offset=offset||0;
         var availableScreenWidth=window.screen.width-($(document).width()-visibleAreaWidth);
         var oldWidth=ctEl.width();
         var newWidth=Math.ceil((pH.timelineLength / TIME_PRECISION[this.scale]) * availableScreenWidth);
