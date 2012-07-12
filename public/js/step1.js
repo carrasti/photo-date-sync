@@ -19,7 +19,7 @@ var photoSyncStep1 = {
         var photoCt = el.find('.photo-ct-outer');
 
         this.addDirectory({
-            path : '/home/arrastia/Desktop/2012_06_22-23_Juhannus'
+            path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus'
         });
         /*this.addDirectory({
             path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Tiina'
@@ -100,6 +100,7 @@ var photoSyncStep1 = {
     updateUi : function() {
         var photosEl = $('#photoSync .photos-ct');
         var camerasEl = $('#photoSync .cameras > ul');
+        var timeadjustEl = $('#photoSync .timeadjust> ul');
 
         var pH = this.photoHandler;
         $.each(pH.photosByCamera, function(g, group) {
@@ -167,6 +168,17 @@ var photoSyncStep1 = {
                 group.elTitle = $.tmpl('camera', {
                     camera : group.name
                 }).appendTo(camerasEl);
+                
+                //add the timer
+                group.elTimeAdjust = $.tmpl('timeadjust', {
+                    fields : [
+                         {type:'day', name:'days'},
+                         {type:'hour', name:'hours'},
+                         {type:'min', name:'minutes'},
+                         {type:'sec', name:'seconds'}
+                    ]
+                }).appendTo(timeadjustEl);
+                
             }
 
             $.each(group.photos, function(index, photo) {

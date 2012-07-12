@@ -22,8 +22,25 @@ $.template('photo', '\
         <span class="metadata"><span class="name">${name}</span><span class="date">${date}</span></span>\
     </li>');
 $.template('camera', '<li class="distribute-height cameramodel"><span>${camera}</span></li>');
-        
-var TIME = {}
+
+$.template('timeadjust', '\
+        <li class="distribute-height timeadjuster">\
+            <div class="adjuster-wrapper">\
+                <span class="plusminus"></span>\
+                {{each fields}}\
+                    <span class="${type}">\
+                        <span class="value"><label>${name}</label><input type="text" name="${type}"/></span>\
+                        <span class="modifiers">\
+                            <span class="up"></span>\
+                            <span class="down"></span>\
+                        </span>\
+                    </span>\
+                {{/each}}\
+            </div>\
+        </li>');
+
+
+var TIME = {};
 TIME.second=1000;
 TIME.minute=TIME.second*60;
 TIME.hour=TIME.minute*60;
