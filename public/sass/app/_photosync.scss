@@ -1,6 +1,6 @@
 $row-height:180px;
 $cameras-width:30px;
-$timeadjust-width:100px;
+$timeadjust-width:200px;
 
 
 #photoSync{
@@ -67,6 +67,34 @@ $timeadjust-width:100px;
         bottom:0;
         background-color:#F0F0F0;
         z-index:100;
+        
+        ul{
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+        }
+    }
+    li.timeadjuster{
+        position:relative;
+        border-bottom:1px solid #CCC;
+        border-left:1px solid #CCC;
+        border-top:1px solid #FFF;
+        
+        div.adjuster-wrapper{
+            position:absolute;
+            top:42%;
+            bottom:46%;
+            left:0;right:0;
+            border:1px solid red;
+        }
+        
+        .plusminus{
+            border:1px solid red;
+            width:20px;
+            height:20px;
+        }
     }
     
     
