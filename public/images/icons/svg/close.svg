@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1000"
+   height="1000"
+   id="svg3282"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="minus.svg">
+  <defs
+     id="defs3284" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.175"
+     inkscape:cx="523.87961"
+     inkscape:cy="-740.58379"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1680"
+     inkscape:window-height="983"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3287">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-52.362183)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path3100"
+       style="fill:#100f0d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="M 594.8776,552.36274 762.8592,720.32505 667.9917,815.17237 500.0294,647.21094 332.0276,815.17237 237.1803,720.32505 405.1417,552.36274 237.1803,384.40042 332.0276,289.45386 500.0101,457.39598 667.9715,289.45386 762.8399,384.40042 594.8776,552.36274 z M 500.0101,91.289703 c -254.6598,0 -461.073,206.393047 -461.073,461.073037 0,254.58075 206.4132,461.07196 461.073,461.07196 254.6001,0 461.0528,-206.49121 461.0528,-461.07196 0,-254.67999 -206.4527,-461.073037 -461.0528,-461.073037" />
+  </g>
+</svg>
