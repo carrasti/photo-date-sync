@@ -1,4 +1,6 @@
 @import "photosync";
+@import "effects";
+
 
 .ui-draggable{
     @include special-cursor(grab);
