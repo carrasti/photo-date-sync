@@ -12,6 +12,8 @@ var PhotoUtil = {
     }
 };
 
+
+
 var PhotoGroup = function(name) {
     this.name = name;
     this.details = {};
@@ -19,8 +21,11 @@ var PhotoGroup = function(name) {
     this.noTsPhotos = [];
     this.elPhotos = undefined;
     this.elTitle = undefined;
-    this.elTimeAdjust = undefined;
+    this.timeAdjuster = undefined;
+    this.timelineStart = undefined;
+    this.timelineEnd = undefined;
 };
+
 PhotoGroup.prototype.addPhoto = function(photo) {
     if (photo.date) {
         this.photos.push(photo);
@@ -29,24 +34,34 @@ PhotoGroup.prototype.addPhoto = function(photo) {
     }
     photo.group = this;
 };
-PhotoGroup.prototype.calculatePcts = function(startTs, endTs) {
-    var firstTs = this.getFirst().getTs();
-    var lastTs = this.getLast().getTs();
+PhotoGroup.prototype.calculatePcts = function(startTs, endTs,firstTs,lastTs) {
+    firstTs = firstTs || this.getFirst().getTs();
+    lastTs = lastTs || this.getLast().getTs();
     return [ PhotoUtil.calculatePct(firstTs, startTs, endTs), PhotoUtil.calculatePct(lastTs, startTs, endTs) ];
 };
-PhotoGroup.prototype.setPcts = function(pctFirst, pctLast) {
+PhotoGroup.prototype.setPcts = function(pctFirst, pctLast,animate) {
+    animate=animate||false;
+    var el=this.elPhotos;
     this.details.pctFirst = pctFirst;
     this.details.pctLast = pctLast;
-    if (this.elPhotos) {
-        console.debug(this.name,this.details.pctFirst,this.details.pctLast);
-        $(this.elPhotos).css('left', this.details.pctFirst + '%');
-        $(this.elPhotos).css('right', (100-this.details.pctLast) + '%');
+    if (el) {
+        el=$(el);
+        var l=this.details.pctFirst + '%',r=(100-this.details.pctLast) + '%';
+        
+        if (!animate){
+            el.css('left', l);
+            el.css('right', r);
+        }else{
+            el.stop();
+            el.animate({left:l,right:r},400);
+        }
     }
 };
-PhotoGroup.prototype.updatePcts = function(startTs, endTs) {
-    this.setPcts.apply(this, this.calculatePcts(startTs, endTs));
+PhotoGroup.prototype.updatePcts = function(startTs, endTs, animate,firstTs,lastTs) {
+    var params=this.calculatePcts(startTs, endTs, firstTs,lastTs);
+    params.push(animate);
+    this.setPcts.apply(this, params);
 };
-
 PhotoGroup.prototype.sortByDate = function() {
     PhotoUtil.sortPhotoArray(this.photos);
 };
@@ -61,9 +76,23 @@ PhotoGroup.prototype.getFirst = function() {
 PhotoGroup.prototype.getLast = function() {
     return this.photos[this.photos.length - 1];
 };
+
+PhotoGroup.prototype.setTimeAdjuster = function(timeAdjuster) {
+    this.timeAdjuster=timeAdjuster;
+    $(this.timeAdjuster).on('changed_ts', {scope:this},function(event, adjuster, ts){
+        var me=event.data.scope;
+        $(me).trigger('move_request',[me,ts,true]);
+    });
+};
+PhotoGroup.prototype.onChangedFirstTs=function(event, group, newTs){
+    var me=event.data.scope;
+    me.timeAdjuster.setTs(newTs,false);
+};
+
+
 var Photo = function(options) {
     this.date = options.date || null;
-    this.thumbnail = (options.thumbnail && options.thumbnail != "") ? options.thumbnail : '';
+    this.thumbnail = (options.thumbnail && options.thumbnail !== "") ? options.thumbnail : '';
     this.name = options.name;
     this.camera = options.camera;
     this.model = options.model;
@@ -87,7 +116,7 @@ Photo.prototype.getTs = function() {
 Photo.prototype.calculatePct = function(startTs, endTs) {
     if (!this.group) {
         return;
-    };
+    }
     startTs = startTs || this.group.getFirst().getTs();
     endTs = endTs || this.group.getLast().getTs();
     return PhotoUtil.calculatePct(this.getTs(), startTs, endTs);
@@ -132,11 +161,17 @@ PhotoHandler.prototype.addPhoto = function(data) {
 
     if (cameraName) {
         if (!this.photosByCamera.hasOwnProperty(cameraName)) {
-            this.photosByCamera[cameraName] = new PhotoGroup(cameraName);
+            this.addGroup(cameraName);
         }
         this.photosByCamera[cameraName].addPhoto(photo);
     }
 };
+
+PhotoHandler.prototype.addGroup=function(groupName){
+    var group=new PhotoGroup(groupName);
+    this.photosByCamera[groupName] = group; 
+    $(group).on('move_request',{scope:this},this.onGroupMoveRequest);
+},
 
 PhotoHandler.prototype.sortByDate = function() {
     PhotoUtil.sortPhotoArray(this.photos);
@@ -153,6 +188,8 @@ PhotoHandler.prototype.sortByDate = function() {
 PhotoHandler.prototype.updateUi = function() {
     var photoHandler = this;
     $.each(this.photosByCamera, function(key, group) {
+        group.timelineStart=photoHandler.timelineFirst;
+        group.timelineEnd=photoHandler.timelineLast;
         group.updatePcts(photoHandler.timelineFirst, photoHandler.timelineLast);
         group.updatePhotosPct();
     });
@@ -164,3 +201,22 @@ PhotoHandler.prototype.getFirst = function() {
 PhotoHandler.prototype.getLast = function() {
     return this.photos[this.photos.length - 1];
 };
+
+PhotoHandler.prototype.onGroupMoveRequest=function(event, group, newTs, animate){
+    var me=event.data.scope;
+    var delta=newTs-group.getFirst().getTs();
+    var firstTs=newTs,lastTs=group.getLast().getTs()+delta;
+    
+    group.updatePcts(me.timelineFirst, me.timelineLast,true,firstTs,lastTs);
+    
+    /*
+    PhotoGroup.prototype.moveStart=function(newTs,triggerEvent,animate){
+        var firstTs=this.getFirst().getTs();
+        var lastTs=this.getLast().getTs();
+        var delta=newTs-firstTs;
+        lastTs+=delta;
+        
+        this.setPcts()
+    };*/
+};
+

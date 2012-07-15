@@ -1,0 +1,23 @@
+
+//tools in the header
+.tools li{
+    @include transition(background-color 0.4s, box-shadow 0.4s);
+    
+    span{
+        visibility:hidden;
+        opacity:0;
+        @include transition(opacity 0.4s,visibility 0s ease 0.4s);
+    }
+    
+    //hover styles
+    &:hover{
+        background-color:#777;
+        @include box-shadow(0 0 4px #444);
+        @include transition(background-color 0.4s, box-shadow 0.4s);
+        span{
+            visibility:visible;
+            opacity:1;
+             @include transition(opacity 0.4s);
+        }
+    }
+}
