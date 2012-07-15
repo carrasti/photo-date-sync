@@ -1,3 +1,4 @@
+
 $row-height:180px;
 $cameras-width:30px;
 $timeadjust-width:200px;
@@ -49,7 +50,7 @@ $timeadjust-width:200px;
                     position:absolute;
                     top:0px;
                     left:30px;
-                    diplay:block;
+                    display:block;
                     width:$camera-span-width;
                     left: 6px;
                     top: 98%;
@@ -60,6 +61,7 @@ $timeadjust-width:200px;
     }
     
     .timeadjust{
+        color:#666;
         position:absolute;
         right:0px;
         top:0px;
@@ -81,20 +83,82 @@ $timeadjust-width:200px;
         border-bottom:1px solid #CCC;
         border-left:1px solid #CCC;
         border-top:1px solid #FFF;
-        
+        @include user-select(none);
         div.adjuster-wrapper{
             position:absolute;
             top:42%;
             bottom:46%;
             left:0;right:0;
-            border:1px solid red;
+            & > span{
+                float:left;
+                position:relative;
+                display:block;
+                width:44px;
+                height:40px;
+                .value{
+                    display:block;
+                    height:100%;
+                }
+                &.plusminus{
+                    width:20px;
+                    height:20px;
+                    margin-top:10px;
+                    text-align:right;
+                    cursor:pointer;
+                    color:#999;
+                    &.plusminus:hover:before{
+                        @extend .icon-circle-refresh:before;
+                        color:#990000;
+                    }
+                }
+            }
         }
         
-        .plusminus{
-            border:1px solid red;
-            width:20px;
-            height:20px;
+        .modifiers{
+            position:absolute;
+            top:4px;
+            right:0;
+            line-height:10px;
+            & > span{
+                cursor:pointer;
+                display:block;
+                width:12px;
+                height:12px;
+                &:before{
+                    font-size:12px;
+                }
+            }
         }
+        label{
+            display:block;
+            position:absolute;
+            bottom:0px;
+            left:0;
+            right:0px;
+            text-align:center;
+            font-size:11px;
+            font-weight:normal;
+        }
+        input{
+            position:absolute;
+            left:-2px;
+            right:10px;
+            top:-1px;
+            color: #333;
+            background:none;
+            border:none;
+            display:block;
+            text-align:right;
+            font-size:26px;
+            &:focus{
+                background:#F9F9F9;
+                @include box-shadow(#AAA 1px 1px 3px);
+                outline:none;
+            }
+        }
+        
+        
+        
     }
     
     

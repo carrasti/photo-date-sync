@@ -1,0 +1,7 @@
+#photoSync .timeadjust .modifiers > span{
+    opacity:0.4;
+    &:hover{
+        opacity:0.8;
+        @include transition(opacity 0.4s);
+    }
+}

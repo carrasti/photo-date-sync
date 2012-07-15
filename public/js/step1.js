@@ -19,11 +19,11 @@ var photoSyncStep1 = {
         var photoCt = el.find('.photo-ct-outer');
 
         this.addDirectory({
-            path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus'
+            path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Carlos'
         });
-        /*this.addDirectory({
+        this.addDirectory({
             path : '/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus/Tiina'
-        });*/
+        });
 
         /*
          * this.addDirectory({ path :
@@ -86,14 +86,14 @@ var photoSyncStep1 = {
                 date = new Date(parseInt(parts[1], 10), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10), parseInt(parts[4], 10), parseInt(parts[5], 10), parseInt(parts[6], 10));
             }
             var o = {
-                thumbnail : it['Thumbnail'],
+                thumbnail : it.Thumbnail,
                 date : date,
                 name : key,
                 camera : it['Exif.Image.Make'],
                 model : it['Exif.Image.Model']
             };
             this.photoHandler.addPhoto(o);
-        };
+        }
         this.photoHandler.sortByDate(data);
         this.updateUi();
     },
@@ -109,39 +109,43 @@ var photoSyncStep1 = {
                 var el = $.tmpl('photoRow', {}).appendTo(photosEl);
                 // add the row and update the element for the camera
                 group.elPhotos = el.find('ul');
-
+                
+                group.elPhotos.on('changed_first_ts',{scope:group},group.onChangedFirstTs);
+                
                 var o = {
+                        group:group,
                         initializeDrag:function(el){
                             this.el=el;
-                            this.leftPct = parseFloat(el.css('left').split('%')[0]);
-                            this.rightPct = parseFloat(el.css('right').split('%')[0]);
-                            this.leftPx = el.position().left;
-                            this.lastLeftPx=0;
-
+                            this.uiLeftPct = this.getLeftPct();
+                            this.uiRightPct = this.getRightPct();
+                        },
+                        getLeftPct:function(){
+                            return (this.el.position().left/this.el.parent().width())*100;
+                        },
+                        getRightPct:function(){
+                            return 100-(((this.el.position().left+this.el.width())/this.el.parent().width())*100);
                         },
                         endDrag:function(){
 
                         },
-                        calculatePctDiff:function(posPx){
-                            var pct=this.leftPct;
-                            console.debug('before:',posPx);
-                            posPx=posPx||this.el.position().left;
-                            console.debug('after:',posPx);
-                            this.lastLeftPx=posPx;
-                            var newpct=(posPx/this.leftPx)*pct;
-                            var diff = pct - newpct;
-                            return diff;
+                        calculatePctDiff:function(){
+                            var newPct=this.getLeftPct();
+                            return newPct-this.uiLeftPct;
                         },
                         updateRightPct:function(diffPct){
                             diffPct=diffPct||this.calculatePctDiff();
-                            this.el.css('right',(this.rightPct+diffPct)+'%');
+                            this.el.css('right',(this.uiRightPct-diffPct)+'%');
                         },
                         updateLeftPct:function(diffPct){
                             diffPct=diffPct||this.calculatePctDiff();
-                            this.el.css('left',(this.leftPct-diffPct)+'%');
+                            this.el.css('left',(this.uiLeftPct+diffPct)+'%');
+                        },
+                        getNewTs:function(){
+                            var length=group.timelineEnd-group.timelineStart;
+                            return group.timelineStart+(length*(this.getLeftPct()/100));
                         }
                 };
-                $(group.elPhotos[0]).draggable({
+                $(group.elPhotos).draggable({
                     axis : "x",
 
                     start : (function(o) {
@@ -152,12 +156,14 @@ var photoSyncStep1 = {
                     })(o),
                     drag : (function(o) {
                         return function(event, ui) {
-                            o.updateRightPct();
+                            var diffPct=o.calculatePctDiff();
+                            $(ui.helper).trigger('changed_first_ts',[o.group,o.getNewTs(diffPct)]);
+                            o.updateRightPct(diffPct);
+                            o.updateLeftPct(diffPct);
                         };
                     })(o),
                     stop : (function(o) {
                         return function(event, ui) {
-                            console.debug('last');
                             var diffPct=o.calculatePctDiff(o.lastLeftPx);
                             o.updateRightPct(diffPct);
                             o.updateLeftPct(diffPct);
@@ -170,14 +176,8 @@ var photoSyncStep1 = {
                 }).appendTo(camerasEl);
                 
                 //add the timer
-                group.elTimeAdjust = $.tmpl('timeadjust', {
-                    fields : [
-                         {type:'day', name:'days'},
-                         {type:'hour', name:'hours'},
-                         {type:'min', name:'minutes'},
-                         {type:'sec', name:'seconds'}
-                    ]
-                }).appendTo(timeadjustEl);
+                var timeAdjuster=new PhotoSync.TimeAdjuster(timeadjustEl,group.getFirst().getTs());
+                group.setTimeAdjuster(timeAdjuster);
                 
             }
 
@@ -232,7 +232,7 @@ var photoSyncStep1 = {
         var newScale=scale||(Math.min(TIME_PRECISION.length,Math.max(0,this.scale+delta)));
         this.scale=newScale;
         var pH=this.photoHandler,scrollEl = $('#photoSync .photo-ct-outer'), ctEl=scrollEl.find('.photos-ct');
-        var visibleAreaWidth=scrollEl.width()
+        var visibleAreaWidth=scrollEl.width();
         offset=offset||Math.floor(visibleAreaWidth/2);
         //offset=offset||0;
         var availableScreenWidth=window.screen.width-($(document).width()-visibleAreaWidth);

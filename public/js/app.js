@@ -10,7 +10,7 @@ $.template('sortPage',
 '    </div>'+
 '    <div class="timeline"></div>'+
 '    <div class="wizardnav"></div>');
-$.template('photoRow', '<div class="distribute-height photostream"><ul></ul></div>');
+var a=$.template('photoRow', '<div class="distribute-height photostream"><ul></ul></div>');
 $.template('photo',
 '    <li class="photostream-image">'+
 '        <span class="image"><img src="data:image/gif;base64,${thumbnail}"></span>'+
@@ -21,13 +21,13 @@ $.template('camera', '<li class="distribute-height cameramodel"><span>${camera}<
 $.template('timeadjust',
 '        <li class="distribute-height timeadjuster">'+
 '            <div class="adjuster-wrapper">'+
-'                <span class="plusminus"></span>'+
+'                <span class="plusminus icon icon-plus"></span>'+
 '                {{each fields}}'+
 '                    <span class="${type}">'+
-'                        <span class="value"><label>${name}</label><input type="text" name="${type}"/></span>'+
+'                        <span class="value"><label>${name}</label><input type="text" name="${type}" value="59"/></span>'+
 '                        <span class="modifiers">'+
-'                            <span class="up"></span>'+
-'                            <span class="down"></span>'+
+'                            <span class="up icon icon-up"></span>'+
+'                            <span class="down icon icon-down"></span>'+
 '                        </span>'+
 '                    </span>'+
 '                {{/each}}'+

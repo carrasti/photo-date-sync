@@ -54,27 +54,7 @@
             width:100px;
             text-align:center;
             font-size:12px;
-            visibility:hidden;
-            opacity:0;
-            @include transition(opacity 0.4s,visibility 0s ease 0.4s);
             @include text-shadow(0 0 2px #FFF);
-        }
-        
-        //default transitions
-        @include transition(background-color 0.4s, box-shadow 0.4s);
-        
-        
-        //mousover styles
-        &:hover{
-            background-color:#777;
-            @include box-shadow(0 0 4px #444);
-            @include transition(background-color 0.4s, box-shadow 0.4s);
-            span{
-                @include transition(opacity 0.4s);
-                visibility:visible;
-                opacity:1;
-            }
-            
         }
     }
 }

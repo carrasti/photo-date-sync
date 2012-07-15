@@ -13,7 +13,7 @@ requirejs.config({
 
 (function(){
     var libs = ["jquery", "libs/jquery.tmpl", "libs/jquery.mousewheel","libs/jquery.ui.custom"];
-    var app = ["app","step1","photohandler"];
+    var app = ["app","step1","photohandler","timeadjuster"];
     
     var reqs=[];
     reqs.push.apply(reqs,libs);
