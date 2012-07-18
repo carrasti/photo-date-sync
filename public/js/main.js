@@ -30,4 +30,5 @@ require.config({
 
 require(['domready!','jquery','underscore','backbone','views/app'], function(doc,$,_,Backbone,AppView){
     var app=new AppView();
+    window.App=app;
 });
