@@ -5,8 +5,22 @@
 {% endblock %}
 
 {% block content %}
-    <div id="photoSync">
+    <div id="photoSync" style="display:none">
+        <div class="photos">
+            <div class="cameras">
+                <ul>
+                </ul>
+            </div>
+            <div class="photo-ct-outer">
+                <div class="photos-ct"></div>
+            </div>
+            <div class="timeadjust">
+                <ul></ul>
+            </div>
+        </div>
+        <div class="timeline"></div>
+        <div class="wizardnav"></div>
     </div>
-    <div id="photoSavesave">
+    <div id="photoSave" style="display:none">
     </div>
 {% endblock %}

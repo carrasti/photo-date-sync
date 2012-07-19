@@ -60,7 +60,7 @@ exports.photoList = function(req, res) {
                 } else {
                     fileMetadata.errors.push(imagePath);
                 }
-                
+
                 processingFiles--;
                 if (processingFiles === 0) {
                     res.json(fileMetadata);
