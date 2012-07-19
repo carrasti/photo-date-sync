@@ -3,20 +3,39 @@ define([
         'underscore',
         'backbone',
         'collections/tools',
-        'views/app-tools'
-], function($, _, Backbone, ToolsCollection, AppToolsView) {
+        'views/app-tools',
+        'views/photosync'
+], function($, _, Backbone, ToolsCollection, AppToolsView, PhotoSyncView) {
     var AppView = Backbone.View.extend({
-        el : $("#content"),
-        toolsEl : $(".tools ul"),
+        el : $('body'),
+        contentEl : $('#content'),
+        toolsEl : $('.tools ul'),
+
+        // references to other views
+        photoSyncView:undefined,
+        photoSaveView:undefined,
+
+        events : {
+            'click header .tools li' : 'onToolClicked'
+        },
+
         initialize : function(opts) {
             opts = opts || {};
 
+            /* initialize data structures */
             this.toolsCollection = new ToolsCollection();
+
+            /* initialize views */
+            this.initializeViews();
+
+            this.render();
+        },
+
+        initializeViews : function() {
+            /*----- tools view -----*/
             this.toolsView = new AppToolsView({
                 collection : this.toolsCollection
             });
-
-            this.render();
         },
 
         render : function() {
@@ -33,6 +52,40 @@ define([
                         cls : 'new_project icon icon-exit'
                     }
             ]);
+
+            if (!this.photoSyncView) {
+                this.photoSyncView = new PhotoSyncView();
+                this.photoSyncView.render();
+            }
+
+            this.photoSyncView.$el.show();
+
+            if (this.photoSaveView) {
+                this.photoSaveView.$el.hide();
+            }
+
+            //temp
+            this.photoSyncView.addDirectory({
+                path:'/home/arrastia/Desktop/2012_06_22-23_Juhannus'
+            });
+
+
+        },
+
+        onToolClicked : function(event) {
+            var target = event.currentTarget;
+            var m = target.className.match(/^([^\s]+)\s/);
+            if (!m) {
+                return;
+            }
+
+            switch (m[1]) {
+                case 'add_dir':
+                    break;
+                case 'new_project':
+                    break;
+            }
+
         }
     });
     return AppView;
