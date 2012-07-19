@@ -1,1 +1,17 @@
-
+            <div class="adjuster-wrapper">
+                <span class="plusminus icon icon-plus"></span>
+                <% _.each([
+                          {type:'day', name:'days'},
+                          {type:'hour', name:'hours'},
+                          {type:'min', name:'minutes'},
+                          {type:'sec', name:'seconds'}
+                     ],function(item, index){ %>
+                    <span class="${type}">
+                        <span class="value"><label><%= item.name %></label><input type="text" name="<%= item.type %>" value="0"/></span>
+                        <span class="modifiers">
+                            <span class="up icon icon-up"></span>
+                            <span class="down icon icon-down"></span>
+                        </span>
+                    </span>
+                <% }) %>
+            </div>

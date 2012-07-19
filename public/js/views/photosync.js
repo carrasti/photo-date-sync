@@ -12,7 +12,8 @@ define([
         photosCollection : undefined,
         noTsPhotosCollection : undefined,
         photoGroups : undefined,
-        initialize : function() {
+        initialize : function(opts) {
+            opts=opts||{};
             this.photoGroups = new Backbone.Collection({
                 model : PhotoGroup
             });
@@ -22,6 +23,10 @@ define([
 
             this.noTsPhotosCollection = new PhotosCollection();
             this.photosCollection.on('add', this.onPhotosCollectionAdd, this);
+            
+            this.timelineMargin=opts.timelineMargin||600000; //10 minutes margin for timeline
+            this.blockMargin=opts.blockMargin||180000; //3 minutes margin for block
+            
         },
 
         addDirectory : function(pathOpts) {
@@ -81,18 +86,35 @@ define([
             if (!group) {
                 group = new PhotoGroup({
                     id : cameraName,
-                    name: cameraName
+                    name: cameraName,
+                    blockMargin:this.blockMargin
                 });
                 this.photoGroups.add(group);
                 // initialize the view associated
             }
             group.addPhoto(photo);
+            this.onPhotosCollectionAddBatchAfter();
         },
+        onPhotosCollectionAddBatchAfter:_.throttle(function(){
+            if (!this.firstThrottleAvoided){
+                this.firstThrottleAvoided=true;
+                return;
+            }
+            var margin=this.timelineMargin,firstTs=this.photosCollection.first().getTs()-margin,
+                lastTs=this.photosCollection.last().getTs()+margin;
+            this.photoGroups.each(function(photoGroup, index){
+                //do this to check if it is initialized, with throttle sometimes the group is not initialized
+                if(photoGroup.id){
+                    photoGroup.updatePcts(firstTs,lastTs);                    
+                }
 
+            });
+            delete(this.firstThrottleAvoided);
+        },10),
         onPhotoGroupsAdd : function(photoGroup) {
             var view=new PhotoGroupView({model:photoGroup});
             view.render();
-          this.distributeGroupHeights();
+            this.distributeGroupHeights();
         },
         distributeGroupHeights:  _.throttle(function(){
             $(this.el).find('.distribute-height').height((100/(this.photoGroups.length-1))+'%');
