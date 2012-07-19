@@ -19,7 +19,6 @@ $timeadjust-width:200px;
         right:0px;
         overflow:hidden;
         @include border-radius(2px);
-        //@include box-shadow(#999 -4px 0 8px 0 inset);
         border:1px solid #E0E0E0;
     }
     
@@ -38,20 +37,33 @@ $timeadjust-width:200px;
                 height:$row-height - 2;
                 display:block;
                 font-size:11px;
-                border-bottom:1px solid #CCC;
-                border-right:1px solid #CCC;
-                border-top:1px solid #FFF;
+                @include box-shadow(#CCC -1px -1px 0 0 inset);
                 overflow:hidden;
                 position:relative;
+                @include ellipsis;
+                white-space: nowrap;
+                &:after{
+                        content:'';
+                        position:absolute;
+                        
+                        top:0px;
+                        left:0px;
+                        right:1px;
+                        height:20px;
+                        border-top:1px solid #FFF;
+                        background-color:#F0F0F0;
+                        @include background(linear-gradient(#F0F0F0 , transparentize(#F0F0F0,1)));
+                        z-index:1;
+                    }
                 span{
                     $camera-span-width:500px;
                     @include rotate(-90deg);
                     @include transform-origin(0, 0);
                     position:absolute;
                     top:0px;
-                    left:30px;
                     display:block;
                     width:$camera-span-width;
+                    padding-left:2px;                    
                     left: 6px;
                     top: 98%;
                     text-align:left;
@@ -80,15 +92,13 @@ $timeadjust-width:200px;
     }
     li.timeadjuster{
         position:relative;
-        border-bottom:1px solid #CCC;
-        border-left:1px solid #CCC;
-        border-top:1px solid #FFF;
-        @include user-select(none);
+        @include box-shadow(#CCC 1px -1px 0 0 inset,#FFF 0 1px 0 0 inset);
         div.adjuster-wrapper{
             position:absolute;
-            top:42%;
-            bottom:46%;
+            top:50%;
+            bottom:50%;
             left:0;right:0;
+            margin-top:-26px;
             & > span{
                 float:left;
                 position:relative;
@@ -140,9 +150,11 @@ $timeadjust-width:200px;
             font-weight:normal;
         }
         input{
+            @include user-select(text !important);
             position:absolute;
             left:-2px;
             right:10px;
+            width:32px;
             top:-1px;
             color: #333;
             background:none;
@@ -151,6 +163,7 @@ $timeadjust-width:200px;
             text-align:right;
             font-size:26px;
             &:focus{
+                @include user-select(text !important);
                 background:#F9F9F9;
                 @include box-shadow(#AAA 1px 1px 3px);
                 outline:none;
@@ -178,13 +191,13 @@ $timeadjust-width:200px;
     .photostream{
         position:relative;
         height:$row-height - 1;
-        border-bottom:2px solid #F0F0F0;
+        @include box-shadow(#E6E6E6 0px -1px 0 0 inset,#FFF 0 1px 0 0 inset);
         width:100%;
         ul{
             position:absolute;
             top:0;
             bottom:0;
-            background-color:transparentize(#FFFF00, 0.85);
+            background-color:transparentize(#0000FF, 0.90);
             width:auto !important;
             li{
                 position:absolute;
@@ -206,6 +219,7 @@ $timeadjust-width:200px;
         
         
         span.image{
+            z-index:2;
             position:absolute;
             top:0;
             left:-50%;

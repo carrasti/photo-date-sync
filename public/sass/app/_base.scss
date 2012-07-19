@@ -1,11 +1,6 @@
 @import "photosync";
 @import "effects";
 
-*{
-    @include user-select(none);
-    cursor:default;
-}
-
 .ui-draggable{
     @include special-cursor(grab);
 }
