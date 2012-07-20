@@ -10,7 +10,7 @@ $timeadjust-width:200px;
     bottom:10px;
     right:10px;
     left:10px;
-    
+
     .photos{
         position:absolute;
         top:0;
@@ -21,8 +21,8 @@ $timeadjust-width:200px;
         @include border-radius(2px);
         border:1px solid #E0E0E0;
     }
-    
-    
+
+
     .cameras{
         position:absolute;
         top:0;
@@ -31,9 +31,9 @@ $timeadjust-width:200px;
         width:$cameras-width;
         z-index:100;
         background:#F0F0F0;
-        ul{ 
+        ul{
             height:100%;
-            li{ 
+            li{
                 height:$row-height - 2;
                 display:block;
                 font-size:11px;
@@ -45,7 +45,7 @@ $timeadjust-width:200px;
                 &:after{
                         content:'';
                         position:absolute;
-                        
+
                         top:0px;
                         left:0px;
                         right:1px;
@@ -63,7 +63,7 @@ $timeadjust-width:200px;
                     top:0px;
                     display:block;
                     width:$camera-span-width;
-                    padding-left:2px;                    
+                    padding-left:2px;
                     left: 6px;
                     top: 98%;
                     text-align:left;
@@ -71,7 +71,7 @@ $timeadjust-width:200px;
             }
         }
     }
-    
+
     .timeadjust{
         color:#666;
         position:absolute;
@@ -81,7 +81,7 @@ $timeadjust-width:200px;
         bottom:0;
         background-color:#F0F0F0;
         z-index:100;
-        
+
         ul{
             position:absolute;
             top:0;
@@ -123,7 +123,7 @@ $timeadjust-width:200px;
                 }
             }
         }
-        
+
         .modifiers{
             position:absolute;
             top:4px;
@@ -169,12 +169,12 @@ $timeadjust-width:200px;
                 outline:none;
             }
         }
-        
-        
-        
+
+
+
     }
-    
-    
+
+
     .photo-ct-outer{
         position:absolute;
         top:0;
@@ -183,7 +183,7 @@ $timeadjust-width:200px;
         right:$timeadjust-width;
         overflow-x:hidden;
         overflow-y:hidden;
-        background-color:#F9F9F9; 
+        background-color:#F9F9F9;
     }
     .photos-ct{
         height:100%;
@@ -198,13 +198,12 @@ $timeadjust-width:200px;
             top:0;
             bottom:0;
             background-color:transparentize(#0000FF, 0.90);
-            width:auto !important;
             li{
                 position:absolute;
                 top:0px;
                 bottom:0px;
                 width:200px;
-                
+
                 &:nth-child(3n+2){
                     top:8%;
                 }
@@ -216,8 +215,8 @@ $timeadjust-width:200px;
                 }
             }
         }
-        
-        
+
+
         span.image{
             z-index:2;
             position:absolute;
@@ -234,13 +233,13 @@ $timeadjust-width:200px;
             &:hover{
                 z-index:10;
             }
-            cursor:default; 
-            
+            cursor:default;
+
         }
         span.metadata{
             display:none;
-        } 
+        }
     }
-    
-     
+
+
 }

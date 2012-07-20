@@ -66,7 +66,7 @@ define([
 
             //temp
             this.photoSyncView.addDirectory({
-                path:'/media/EXTRA/PHOTOS/2012/2012_06_22-23_Juhannus'
+                path:'/home/arrastia/Desktop/2012_06_22-23_Juhannus'
             });
 
 
