@@ -14,12 +14,12 @@ define([
       adjustersParentEl:$('#photoSync .timeadjust ul'),
       blocksParentEl:$('#photoSync .photos-ct'),
       $block: undefined, //this will be the ul element for the view where to add the photos and to position the block based in the percents from left, right
+      animate:true,
       initialize:function(){
           //bindings
           this.model.photosCollection.on('add',this.onPhotosCollectionAdd,this);
-          this.model.on('change:firstPct change:lastPct',this.onPctChange,this);
+          this.model.on('change:firstPct',this.onPctChange,this);
       },
-
       render:function(){
           $(this.camerasParentEl).append(this.cameraTpl(this.model.toJSON()));
           var taView=new TimeAdjusterView({model:this.model});
@@ -35,10 +35,22 @@ define([
           this.$block.append(p.render().el);
       },
       onPctChange:function(model){
-          this.$block.css('left',model.get('firstPct')+'%');
-          this.$block.css('right',(100-model.get('lastPct'))+'%');
-      }
+          //if (model.dragging===true){
+          //    return;
+          //}
+          var l=model.get('firstPct')+'%',r=(100-model.get('lastPct'))+'%';
 
+          if (model.dragging===true || this.animate!==true){
+              //do not animate
+              this.$block.css({'left':l,'right':r});
+          }else{
+              //animate
+              this.$block.stop();
+              this.$block.animate({'left':l,'right':r},400);
+
+          }
+
+      }
   });
   return PhotoSyncView;
 });
