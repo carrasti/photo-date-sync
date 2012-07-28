@@ -49,32 +49,76 @@ define([
     var ScaleHelper = Backbone.Model.extend({
         defaults:{
             currentScale:undefined,
+            currentPct:undefined,
             firstTs:0,
             lastTs:0
         },
         initialize : function(opts){
             this.$el=$(opts.el);
+            this.$sizeHelper=this.$el.parent().find('.size-helper');
+            if (this.$sizeHelper.length===0){
+				this.$sizeHelper=this.$el.before('<div class="size-helper"></div>').prev();
+				this.$sizeHelper.height(0);
+				this.$sizeHelper.css({visibility:'hidden'});
+			}
+            
         },
         fitScale:function(){
             this.set('currentScale',TimeUtil.scaleGetBest(this.get('firstTs'),this.get('lastTs')));
             this.scale();
         },
-        scale:function(scale, scaleDiff,scrollOffset, mouseOffset, animate){
+        scale:function(scale, scaleDiff, mouseOffset, animate){
             scaleDiff=scaleDiff || 0;
             scale=scale||(this.get('currentScale')+scaleDiff);
             if (scale<0||scale>TimeUtil.SCALES.length ){
                 return;
             }
+            var el=this.$el,scroller=el.parent(),oldPct=this.get('currentPct');
             this.set('currentScale',scale);
-
-
-            var newpct=TimeUtil.getScalePct(scale,this.get('firstTs'),this.get('lastTs'));
-
-            var el=this.$el,scroller=this.$el.parent;
+            var newPct=TimeUtil.getScalePct(scale,this.get('firstTs'),this.get('lastTs'));
+			var elNewWidthPct=newPct+'%';
+			this.set('currentPct',newPct);
+            this.$sizeHelper.width(elNewWidthPct);
+            console.debug('oldSize',this.$el.width());
+            console.debug('newSize',this.$sizeHelper.width());
+            
+		
+            /*var scrollerScrollLeft=scroller.scrollLeft();
+            var elPixelWidth=el.width();
+            var elNewWidthPct=newPct+'%';
+            var scrollerOffsetLeft=scroller.offset().left;
+            var mouseCenter=mouseOffset?mouseOffset - scrollerOffsetLeft:Math.floor(scroller.width()/2);
+            */
+            
+            
+            //calculate new scroll left, bad accuracy
+            /*
+            var mouseDistancePixels=scrollerScrollLeft - mouseCenter;
+            var newScrollLeftPx=undefined;
+            if (oldPct){
+				var newWidth=newPct*elPixelWidth/oldPct;
+			}
+            
+            
+            
+            el.width(elNewWidthPct);
+            var newPixelWidth=el.width();
+            el.width(elPixelWidth)*/
+            //console.debug('newPixelWidth',newPixelWidth);
+            
+            //console.debug("left",currentLeft,"current W",currentW,"W",w, "mouseO", mouseOffset);
             //stop the animations;
-            this.$el.stop();
-
-            this.$el.animate({width:newpct+'%'});
+            el.stop();
+            if (animate===true){
+			//console.debug(scrollEl.scrollLeft());
+				this.$el.animate({width:elNewWidthPct},200,function(){
+					
+					//console.debug('afterResize', $(this).width());
+					//console.debug('args', arguments);
+					});
+			}else{
+				this.$el.width(elNewWidthPct);
+			}
 
         }
     });
@@ -231,8 +275,7 @@ define([
                 var leftScroll=scrollEl.scrollLeft() - (delta * scrollEl.width() / 3.3);
                 this.photosScroll(leftScroll);
             } else {
-                // scale
-                this.photosScale(undefined, delta, event.pageX - scrollEl.offset().left, true);
+                this.photosScale(undefined, delta, event.offsetX, true);
             }
         },
         photosScroll:function(leftValue){
@@ -243,8 +286,8 @@ define([
                 scrollLeft : leftValue
             }, 100);
         },
-        photosScale:function(scale,delta,offset,animate){
-            this.scaleHelper.scale(undefined,delta);
+        photosScale:function(scale,delta,mouseOffset,animate){
+            this.scaleHelper.scale.apply(this.scaleHelper,arguments);
             return;
 
             delta=delta||0;
