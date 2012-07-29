@@ -363,7 +363,22 @@ define([
                 var leftScroll=scrollEl.scrollLeft() - (delta * scrollEl.width() / 3.3);
                 this.photosScroll(leftScroll);
             } else {
-                this.photosScale(undefined, delta>0?1:-1, event.pageX, true);
+                //scroll. check if it is an image, then we can center it on screen
+                var mouseOffset=event.pageX;
+                var isImg=$(event.target).parents('.photostream-image');
+                if (isImg.length>0){
+                    var imgLeft=isImg.offset().left;
+                    distance=mouseOffset-imgLeft;
+                    var dist=(delta>0?1:-1)*distance;
+                    mouseOffset=imgLeft+dist;
+                    
+                    
+                }
+                
+                
+                
+                
+                this.photosScale(undefined, delta>0?1:-1, mouseOffset, true);
             }
         },
         photosScroll:function(leftValue){

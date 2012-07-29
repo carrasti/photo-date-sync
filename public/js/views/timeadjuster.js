@@ -15,26 +15,30 @@ define([
           this.model.on('change:firstTs change:originalFirstTs',this.throttledOnModelChangeTs,this);
       },
       events:{
-          'click .modifiers > span':'onModifierClick'
+          'click .modifiers > span':'onModifierClick',
+          'click span.plusminus':'onPlusMinusClick'
       },
       render:function(){
           this.$el.html(this.tpl({}));
           /* initialize the elements */
           this.elPlusMinus=this.$el.find('.plusminus');
-          this.elDay=this.$el.find('.day');
-          this.elHour=this.$el.find('.hour');
-          this.elMin=this.$el.find('.min');
-          this.elSec=this.$el.find('.sec');
+          this.elDay=this.$el.find('.days');
+          this.elHour=this.$el.find('.hours');
+          this.elMin=this.$el.find('.mins');
+          this.elSec=this.$el.find('.secs');
           return this;
       },
       onModelChangeTs:function(photoGroup){
+          this.updateInputs();
+      },
+      updateInputs:function(){
           var diff=this.model.get('firstTs')-this.model.get('originalFirstTs');
           var timeParts=TimeUtil.tsGetParts(Math.abs(diff));
 
-          this.elDay.find('input').val(timeParts.days);
-          this.elHour.find('input').val(timeParts.hours);
-          this.elMin.find('input').val(timeParts.minutes);
-          this.elSec.find('input').val(timeParts.seconds);
+          this.elDay.find('span.number').html(timeParts.days);
+          this.elHour.find('span.number').html(timeParts.hours);
+          this.elMin.find('span.number').html(timeParts.minutes);
+          this.elSec.find('span.number').html(timeParts.seconds);
 
           this.elPlusMinus.removeClass('icon-plus');
           this.elPlusMinus.removeClass('icon-minus');
@@ -45,28 +49,32 @@ define([
           }
       },
       onModifierClick:function(event){
-          var target=event.target,me=this;
+          var target=event.target;
           var modifierType=$(target).parent().parent()[0].className;
           var diff=$(target).hasClass('up')?1:-1;
-          var newTs=me.model.get('firstTs');
+          var newTs=this.model.get('firstTs');
 
           switch(modifierType){
-              case 'day':
+              case 'days':
                   newTs=TimeUtil.tsAddDays(newTs,diff);
                   break;
-              case 'hour':
+              case 'hours':
                   newTs=TimeUtil.tsAddHours(newTs,diff);
                   break;
-              case 'min':
+              case 'mins':
                   newTs=TimeUtil.tsAddMinutes(newTs,diff);
                   break;
-              case 'sec':
+              case 'secs':
                   newTs=TimeUtil.tsAddSeconds(newTs,diff);
                   break;
           }
 
-          me.model.set('firstTs',newTs);
-          me.model.recalculatePctsBlock();
+          this.model.set('firstTs',newTs);
+          this.model.recalculatePctsBlock();
+      },
+      onPlusMinusClick:function(){
+          this.model.set('firstTs',this.model.get('originalFirstTs'));
+          this.model.recalculatePctsBlock();
       }
   });
   return TimeAdjusterView ;
