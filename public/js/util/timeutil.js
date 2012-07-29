@@ -9,7 +9,8 @@ define(function(){
             MINUTE:minute,
             HOUR:hour,
             DAY:day,
-
+            
+            
             SCALES : [
                     10*second, //[0]
                     30*second, //[1]
@@ -40,6 +41,18 @@ define(function(){
                 }
 
                 return i;
+            },
+            dividersGetBest:function(startTs,endtTs){
+                var length=endtTs-startTs;
+                var best='days',max=0;
+                _.each(this.DIVIDERS,function(value,key){
+                    var fits=length/value;
+                    if (fits<5 && fits>max){
+                        max=fits;
+                        best=key;
+                    }
+                });
+                return best;
             },
 
             getScalePct:function(scale,startTs,endTs){
@@ -81,8 +94,67 @@ define(function(){
                 var length = tsEnd - tsStart;
                 var zeroed = ts - tsStart;
                 return (zeroed / length) * 100;
+            },
+            pctCalculateTs : function(pct, tsStart,tsEnd){
+                var length = tsEnd - tsStart;
+                return tsStart+ (pct/100*length);
+            },
+            tsDividerToStr:function(type,ts){
+                var d=new Date(ts+this.TS_OFFSET);
+                
+                var date=d.getDay()+' '+this.MONTHS_SHORT[d.getMonth()]+' '+ d.getFullYear();
+                
+                var min=d.getMinutes()+'',hour=d.getHours()+'',secs=d.getSeconds()+'';
+                min=min.length==2?min:'0'+min;
+                hour=hour.length==2?hour:'0'+hour;
+                secs=secs.length==2?secs:'0'+secs;
+                var dateHours=date+' '+hour+':'+min,dateSecs=dateHours+':'+secs;
+                
+                
+                
+                switch(type){
+                    case 'days':
+                        return date;
+                    break;
+                    case 'halfdays':
+                    case 'hours':
+                        return '<span class="primary">'+dateHours+'</span><span class="secondary">'+d.getHours()+'h</span>';
+                        break;
+                    case 'halfhours':
+                    case 'quarterhours':
+                    case 'minutes':
+                        return '<span class="primary">'+dateHours+'</span><span class="secondary">'+d.getMinutes()+'m</span>';
+                        break;
+                    case 'halfminutes':
+                    case 'seconds':
+                        return '<span class="primary">'+dateSecs+'</span><span class="secondary">'+d.getSeconds()+'s</span>';
+                        break;
+                }
             }
-
+            
+            
     };
+    TimeUtil.MONTHS_SHORT=['Jan','Feb','Mar','Apr','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    TimeUtil.DIVIDERS_ORDER=['days','halfdays','hours','halfhours','quarterhours','minutes','halfminutes','seconds'];
+    TimeUtil.DIVIDERS={
+            'days': TimeUtil.DAY,
+            'halfdays': TimeUtil.DAY/2,
+            'hours': TimeUtil.HOUR,
+            'halfhours':TimeUtil.HOUR/2,
+            'quarterhours':TimeUtil.HOUR/4,
+            'minutes':TimeUtil.MINUTE,
+            'halfminutes':TimeUtil.MINUTE/2,
+            'seconds':TimeUtil.SECOND
+    };
+    
+    var ts=10*second;
+    TimeUtil.SCALES=[];
+    while(ts<7*day){
+        TimeUtil.SCALES.push(ts);
+        ts*=2;
+    }
+    
+    
+    TimeUtil.TS_OFFSET=(new Date()).getTimezoneOffset()*TimeUtil.MINUTE;
     return TimeUtil;
 });

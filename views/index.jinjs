@@ -12,7 +12,9 @@
                 </ul>
             </div>
             <div class="photo-ct-outer">
-                <div class="photos-ct"></div>
+                <div class="time-dividers"></div>
+                <div class="photos-ct">
+                </div>
             </div>
             <div class="timeadjust">
                 <ul></ul>
