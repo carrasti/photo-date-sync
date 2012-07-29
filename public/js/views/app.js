@@ -66,7 +66,7 @@ define([
 
             //temp
             this.photoSyncView.addDirectory({
-                path:'/media/EXTRA/PHOTOS/2012/2012_07_23-27_Poland_Kaszuby_Gdansk'
+                path:'/home/arrastia/Desktop/2012_07_23-27_Poland_Kaszuby_Gdansk'
             });
 
 
