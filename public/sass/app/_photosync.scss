@@ -185,12 +185,73 @@ $timeadjust-width:200px;
         overflow-y:hidden;
         background-color:#F9F9F9;
     }
+    
+    .time-dividers{
+        position:absolute;
+        z-index:0;
+        left:0;
+        top:0;
+        bottom:0;
+        & > div{
+            display:none;
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+        }
+        & > div.active{
+            display:block;
+        }
+        
+        div.divider{
+            position:absolute;
+            top:0px;
+            border-left:2px solid #D6D6D6;
+            height:100%;
+            width:0;
+            span.timestring{
+                display:block;
+                position:absolute;
+                width:300px;
+                right:14px;
+                top:4px;
+                font-size:10px;
+                font-weight:bold;
+                color:#909090;
+                text-align:right;
+                height:12px;
+                @include rotate(-90deg);
+                @include transform-origin(100%, 0);
+                span.secondary{
+                    display:none;
+                }
+            }
+        }
+
+        div.next div.divider{
+            border-left:1px solid #E6E6E6;
+            span.timestring{
+                font-weight:normal;
+                color:#B0B0B0;
+                span.primary{
+                    display:none;
+                    
+                }
+                span.secondary{
+                    display:inline;
+                }
+            }
+            
+        }
+        
+    }
+    
     .photos-ct{
         height:100%;
     }
     .photostream{
         position:relative;
-        height:$row-height - 1;
         @include box-shadow(#E6E6E6 0px -1px 0 0 inset,#FFF 0 1px 0 0 inset);
         width:100%;
         ul{
@@ -202,7 +263,6 @@ $timeadjust-width:200px;
                 position:absolute;
                 top:0px;
                 bottom:0px;
-                width:200px;
 
                 &:nth-child(3n+2){
                     top:8%;
@@ -219,7 +279,7 @@ $timeadjust-width:200px;
 
         span.image{
             z-index:2;
-            position:absolute;
+            position:relative;
             top:0;
             left:-50%;
             display:block;

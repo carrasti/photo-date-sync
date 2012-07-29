@@ -43,13 +43,12 @@ define([
         },
         getLeftPct:function(){
             return (this.$el.position().left/this.$el.parent().width())*100;
-        },
+        }
     });
 
     var ScaleHelper = Backbone.Model.extend({
         defaults:{
             currentScale:undefined,
-            currentPct:undefined,
             firstTs:0,
             lastTs:0
         },
@@ -59,67 +58,152 @@ define([
             if (this.$sizeHelper.length===0){
 				this.$sizeHelper=this.$el.before('<div class="size-helper"></div>').prev();
 				this.$sizeHelper.height(0);
-				this.$sizeHelper.css({visibility:'hidden'});
 			}
-            
+            this.$timedivs=this.$el.parent().find('.time-dividers');
+            _.each(TimeUtil.DIVIDERS_ORDER,function(value, index){
+                this.$timedivs.append('<div class="'+value+'"></div>');
+            },this);
+            this.activeDivider1=undefined;
+            this.activeDivider2=undefined;
         },
-        fitScale:function(){
-            this.set('currentScale',TimeUtil.scaleGetBest(this.get('firstTs'),this.get('lastTs')));
+        fitScale:function(firstTs,lastTs){
+            firstTs=firstTs||this.get('firstTs');
+            lastTs=lastTs||this.get('lastTs');
+            this.set('currentScale',TimeUtil.scaleGetBest(firstTs,lastTs));
             this.scale();
         },
-        scale:function(scale, scaleDiff, mouseOffset, animate){
+        scale:function(scale, scaleDiff, mousePageOffset, animate){
             scaleDiff=scaleDiff || 0;
             scale=scale||(this.get('currentScale')+scaleDiff);
             if (scale<0||scale>TimeUtil.SCALES.length ){
                 return;
             }
-            var el=this.$el,scroller=el.parent(),oldPct=this.get('currentPct');
+            var el=this.$el,scroller=el.parent();
+            
+            //stop the animations and go to the end so that sizes are up to date;
+            el.stop(true,true);
+            scroller.stop(true,true);
+            this.$timedivs.stop(true,true);
+            
+            //set the value for the scale
             this.set('currentScale',scale);
+            
+            //calculate sizes in percent and pixels
             var newPct=TimeUtil.getScalePct(scale,this.get('firstTs'),this.get('lastTs'));
 			var elNewWidthPct=newPct+'%';
-			this.set('currentPct',newPct);
             this.$sizeHelper.width(elNewWidthPct);
-            console.debug('oldSize',this.$el.width());
-            console.debug('newSize',this.$sizeHelper.width());
+            var newWidthPx=this.$sizeHelper.width();
+            var oldWidthPx=this.$el.width();
             
-		
-            /*var scrollerScrollLeft=scroller.scrollLeft();
-            var elPixelWidth=el.width();
-            var elNewWidthPct=newPct+'%';
-            var scrollerOffsetLeft=scroller.offset().left;
-            var mouseCenter=mouseOffset?mouseOffset - scrollerOffsetLeft:Math.floor(scroller.width()/2);
-            */
-            
-            
-            //calculate new scroll left, bad accuracy
-            /*
-            var mouseDistancePixels=scrollerScrollLeft - mouseCenter;
-            var newScrollLeftPx=undefined;
-            if (oldPct){
-				var newWidth=newPct*elPixelWidth/oldPct;
-			}
+            //calculate the position for the scroll based in the page offset or the center of the selection
+            var scrollerScrollLeft=scroller.scrollLeft();
+            var mouseXFromScroll=mousePageOffset?mousePageOffset-scroller.offset().left+1:scroller.width()/2;
+            var scrollXCenter=scrollerScrollLeft+mouseXFromScroll;
             
             
             
-            el.width(elNewWidthPct);
-            var newPixelWidth=el.width();
-            el.width(elPixelWidth)*/
-            //console.debug('newPixelWidth',newPixelWidth);
+            var newCenter=(scrollXCenter*newWidthPx/oldWidthPx);
+            var newScrollLeft=Math.max(newCenter-mouseXFromScroll,0);
             
-            //console.debug("left",currentLeft,"current W",currentW,"W",w, "mouseO", mouseOffset);
-            //stop the animations;
-            el.stop();
             if (animate===true){
-			//console.debug(scrollEl.scrollLeft());
-				this.$el.animate({width:elNewWidthPct},200,function(){
-					
-					//console.debug('afterResize', $(this).width());
-					//console.debug('args', arguments);
-					});
+				el.animate({width:elNewWidthPct},200);
+				scroller.animate({scrollLeft:newScrollLeft},200);
+				this.$timedivs.animate({width:elNewWidthPct},200);
 			}else{
-				this.$el.width(elNewWidthPct);
+				el.width(elNewWidthPct);
+				scroller.scrollLeft(newScrollLeft);
+				this.$timedivs.width(elNewWidthPct);
 			}
+            //adjust the dividers
+            this.adjustTimeDividers(newScrollLeft,newWidthPx);
 
+        },
+        adjustTimeDividers:function(scrollLeft,totalWidth){
+            var el=this.$el,scroller=el.parent();
+            scrollLeft=scrollLeft||scroller.scrollLeft();
+            totalWidth=totalWidth||el.width();
+            
+            var visibleLength=scroller.width();
+            var firstPct=Math.max(0,scrollLeft/totalWidth*100);
+            var lastPct=Math.min(100,(scrollLeft+visibleLength)/totalWidth*100);
+            var firstTs=this.get('firstTs'),lastTs=this.get('lastTs');
+            var visibleFirstTs=TimeUtil.pctCalculateTs(firstPct,firstTs,lastTs);
+            var visibleLastTs=TimeUtil.pctCalculateTs(lastPct,firstTs,lastTs);
+            
+            var tsDistance=visibleLastTs-visibleFirstTs;
+            
+            var drawFirstTs=Math.max(firstTs,visibleFirstTs-tsDistance);
+            var drawLastTs=Math.min(lastTs,visibleLastTs+tsDistance);
+            this.drawDividers(TimeUtil.dividersGetBest(visibleFirstTs,visibleLastTs),drawFirstTs,drawLastTs);
+        },
+        drawDividers:function(type,firstTs,lastTs){
+            var actives=this.$timedivs.find('.active');
+            if (actives.length>2){
+                actives.removeClass('active').removeClass('next').html('');
+                this.activeDivider1=undefined;
+                this.activeDivider2=undefined;
+            }
+            var nextType=undefined;
+            if (type!=_.last(TimeUtil.DIVIDERS_ORDER)){
+                nextType=TimeUtil.DIVIDERS_ORDER[_.indexOf(TimeUtil.DIVIDERS_ORDER,type)+1];
+            }
+            if(!this.activeDivider1 || this.activeDivider1.length===0 || !this.activeDivider1.hasClass(type)){
+                if (this.activeDivider1 && this.activeDivider1>0){
+                    this.activeDivider1.removeClass('active').removeClass('next').html('');
+                }
+                this.activeDivider1=this.$timedivs.find('.'+type);
+                this.activeDivider1.addClass('active');
+            }
+            
+            if (!nextType && this.activeDivider2 && this.activeDivider2.length>0 && this.activeDivider2[0]!=this.activeDivider1[0]){
+                this.activeDivider2.removeClass('active').removeClass('next').html('');
+                this.activeDivider2=undefined;
+            }else if(nextType && (!this.activeDivider2 || this.activeDivider2.length===0 || !this.activeDivider2.hasClass(nextType))){
+                if (this.activeDivider2 && this.activeDivider2.length>0){
+                    this.activeDivider2.removeClass('next');
+                    if(this.activeDivider2[0]!=this.activeDivider1[0]){
+                        this.activeDivider2.removeClass('active').html('');
+                    }
+                }
+                this.activeDivider2=this.$timedivs.find('.'+nextType);
+                this.activeDivider2.addClass('active next');
+            }
+
+            this.updateDividers(type,nextType,firstTs,lastTs);
+        },
+        updateDividers:function(type,nextType,firstTs,lastTs){
+            var timeLength=TimeUtil.DIVIDERS[type];
+            var firstDrawTs=firstTs-firstTs%timeLength;
+            var ts=firstDrawTs;
+            var el=this.activeDivider1;
+            var tlFirstTs=this.get('firstTs'),tlLastTs=this.get('lastTs');
+            while(ts<lastTs){
+                var id='divider-'+type+'-'+ts;
+                if (el.find('#'+id).length===0){
+                    var pct=TimeUtil.tsCalculatePct(ts,tlFirstTs,tlLastTs);
+                    el.append('<div id="'+id+'" class="divider" style="left:'+pct+'%"><span class="timestring">'+TimeUtil.tsDividerToStr(type,ts)+'</span></div>');
+                }
+                ts+=timeLength;
+            }
+            if (!nextType){
+                return;
+            }
+            var timeLength2=TimeUtil.DIVIDERS[nextType];
+            firstDrawTs=firstTs-firstTs%timeLength2;
+            ts=firstDrawTs;
+            el=this.activeDivider2;
+            while(ts<lastTs){
+                if (ts%timeLength!==0){
+                    var id='divider-'+type+'-'+ts;
+                    if (el.find('#'+id).length===0){
+                        var pct=TimeUtil.tsCalculatePct(ts,tlFirstTs,tlLastTs);
+                        el.append('<div id="'+id+'" class="divider" style="left:'+pct+'%"><span class="timestring">'+TimeUtil.tsDividerToStr(nextType,ts)+'</span></div>');
+                    }
+                }
+                ts+=timeLength2;
+            }
+            
+            
         }
     });
 
@@ -225,17 +309,21 @@ define([
             }
 
             var margin = this.timelineMargin, firstTs = this.photosCollection.first().getTs() - margin, lastTs = this.photosCollection.last().getTs() + margin;
+            
+            //messing up
+            var distance=lastTs-firstTs,paddedFirstTs=firstTs-distance,paddedLastTs=lastTs+distance;
+                
             this.photoGroups.each(function(photoGroup, index) {
                 // do this to check if it is initialized, with throttle sometimes the group is not initialized
                 if (photoGroup.id) {
-                    photoGroup.updatePcts(firstTs, lastTs);
+                    photoGroup.updatePcts(paddedFirstTs, paddedLastTs);
                 }
 
             });
 
             //adjust the scale
-            this.scaleHelper.set({firstTs:firstTs,lastTs:lastTs});
-            this.scaleHelper.fitScale();
+            this.scaleHelper.set({firstTs:paddedFirstTs,lastTs:paddedLastTs});
+            this.scaleHelper.fitScale(firstTs,lastTs);
 
             delete (this.firstThrottleAvoided);
         }, 10),
@@ -275,7 +363,7 @@ define([
                 var leftScroll=scrollEl.scrollLeft() - (delta * scrollEl.width() / 3.3);
                 this.photosScroll(leftScroll);
             } else {
-                this.photosScale(undefined, delta, event.offsetX, true);
+                this.photosScale(undefined, delta>0?1:-1, event.pageX, true);
             }
         },
         photosScroll:function(leftValue){
@@ -285,6 +373,7 @@ define([
             scrollEl.animate({
                 scrollLeft : leftValue
             }, 100);
+            this.scaleHelper.adjustTimeDividers(leftValue);
         },
         photosScale:function(scale,delta,mouseOffset,animate){
             this.scaleHelper.scale.apply(this.scaleHelper,arguments);

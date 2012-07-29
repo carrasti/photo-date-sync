@@ -4,3 +4,9 @@
         cursor: $browser + $name;
     }
 }
+@mixin calc($attribute, $value){
+    @each $browser in -moz-,-webkit-{
+        #{$attribute}: #{$browser+"calc("+$value+")"};
+    }
+    #{$attribute}:calc(#{$value});
+}
