@@ -4,8 +4,9 @@ define([
         'backbone',
         'collections/tools',
         'views/app-tools',
-        'views/photosync'
-], function($, _, Backbone, ToolsCollection, AppToolsView, PhotoSyncView) {
+        'views/photosync',
+        'temp/sourcephotofolders'
+], function($, _, Backbone, ToolsCollection, AppToolsView, PhotoSyncView, photosList) {
     var AppView = Backbone.View.extend({
         el : $('body'),
         contentEl : $('#content'),
@@ -64,10 +65,14 @@ define([
                 this.photoSaveView.$el.hide();
             }
 
-            //temp
-            this.photoSyncView.addDirectory({
-                path:'/home/arrastia/Desktop/2012_07_23-27_Poland_Kaszuby_Gdansk'
-            });
+            //temporary until selection of directories is implemented
+            _.each(photosList,function(item, index){
+                this.photoSyncView.addDirectory({
+                    path: item
+                });
+            },this)
+
+
 
 
         },

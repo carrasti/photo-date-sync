@@ -1,11 +1,17 @@
 {
-    "name": "arrastia-pictures"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.8"
-    , "jinjs": ">= 0.3.6"
-    , "exiv2" : ">= 0.1.1"
-    , "walk" : ">= 2.2.1"
-  }
+    "name": "photodatesync",
+    "description" : "A full web app to synchronize dates for pictures coming from different cameras.",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+      "express": "2.5.8",
+      "jinjs": ">= 0.3.6",
+      "exiv2" : ">= 0.1.1",
+      "walk" : ">= 2.2.1",
+      "imagemagick" : ">= 0.1.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/carrasti/photo-date-sync.git"
+    }
 }
