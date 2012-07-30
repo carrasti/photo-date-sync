@@ -26,15 +26,15 @@ are for Ubuntu linux:
 Install needed libraries and applications as superuser:
 
 <pre>
-sudo apt-get install git ssh nodejs npm imagemagick libimage-exiftool-perl libexiv2-dev
+    sudo apt-get install git ssh nodejs npm imagemagick libimage-exiftool-perl libexiv2-dev
 </pre>
 
 Clone the repository or get a zipped copy from github go into its directory.
 Then fetch all the nodejs requirements using npm
 
 <pre>
-cd photo-date-sync
-npm install
+    cd photo-date-sync
+    npm install
 </pre>
 
 Finally run the application:
@@ -65,7 +65,7 @@ ACKNOWLEDGEMENTS / LIBRARIES USED
 A rough list of all the libraries used and their licenses:
 
 <table>
-<tr><td colspan="2">**Backend**</td></tr>
+<tr><td colspan="2"><strong>Backend</strong></td></tr>
 <tr><td>Nodejs</td><td></td></tr>
 <tr><td>Npm</td><td></td></tr>
 <tr><td>Expressjs</td><td></td></tr>
@@ -77,15 +77,14 @@ A rough list of all the libraries used and their licenses:
 <tr><td>node-imagemagick</td><td></td></tr>
 <tr><td>exiftool</td><td></td></tr>
 <tr><td>node-walk</td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td colspan="2">**Frontend**</td></tr>
+<tr><td colspan="2"><strong>Frontend</strong></td></tr>
 <tr><td>requirejs</td><td></td></tr>
 <tr><td>backbonejs</td><td></td></tr>
 <tr><td>underscorejs</td><td></td></tr>
 <tr><td>jQuery</td><td></td></tr>
 <tr><td>jquery.ui</td><td></td></tr>
 <tr><td>jquery.mousewheel</td><td></td></tr>
-<tr><td colspan="2">**Other libraries/tools**</td></tr>
+<tr><td colspan="2"><strong>Other libraries/tools</strong></td></tr>
 <tr><td>sass</td><td></td></tr>
 <tr><td>compass</td><td></td></tr>
 <tr><td>fontforge</td><td></td></tr>
