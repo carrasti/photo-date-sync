@@ -25,21 +25,24 @@ are for Ubuntu linux:
 
 Install needed libraries and applications as superuser:
 
-`
+<pre>
 sudo apt-get install git ssh nodejs npm imagemagick libimage-exiftool-perl libexiv2-dev
-`
+</pre>
 
 Clone the repository or get a zipped copy from github go into its directory.
 Then fetch all the nodejs requirements using npm
 
-`cd photo-date-sync`
-`npm install`
+<pre>
+cd photo-date-sync
+npm install
+</pre>
 
 Finally run the application:
 
-`
-node app.js
-`
+<pre>
+    node app.js
+</pre>
+
 
 Then in a web browser (Mozilla Firefox or Google Chrome/Cromium) the application
 can be accessed in the address `http://localhost:8001`
@@ -50,7 +53,7 @@ As the tool is still under development paths to local files have to be
 hardcoded, later on time a file browser to select directories will be provided,
 but for now to change it go to file:
 
-[https://github.com/carrasti/photo-date-sync/blob/master/public/js/temp/sourcephotofolders.js]
+[public/js/temp/sourcephotofolders.js](https://github.com/carrasti/photo-date-sync/blob/master/public/js/temp/sourcephotofolders.js)
 
 And add the **absolute** paths to the folders you want to synchronize. Note that
 when reading the directory it is done recursively
