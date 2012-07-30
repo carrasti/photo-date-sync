@@ -50,7 +50,7 @@ As the tool is still under development paths to local files have to be
 hardcoded, later on time a file browser to select directories will be provided,
 but for now to change it go to file:
 
-[tree/master/public/js]
+[https://github.com/carrasti/photo-date-sync/blob/master/public/js/temp/sourcephotofolders.js]
 
 And add the **absolute** paths to the folders you want to synchronize. Note that
 when reading the directory it is done recursively
