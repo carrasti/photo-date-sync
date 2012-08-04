@@ -215,13 +215,21 @@ define([
         photosCollection : undefined,
         noTsPhotosCollection : undefined,
         photoGroups : undefined,
+        
+        showNextEnabled:false,
+        
+        events:{
+            'click .action-next' : 'onActionNextClick'
+        },
+        
         initialize : function(opts) {
             opts = opts || {};
             this.photoGroups = new Backbone.Collection({
                 model : PhotoGroup
             });
             this.photoGroups.on('add', this.onPhotoGroupsAdd, this);
-
+            this.photoGroups.on('change:firstTs',_.throttle(this.onGroupTimeAdjusted,500),this);
+            
             this.photosCollection = new PhotosCollection();
 
             this.noTsPhotosCollection = new PhotosCollection();
@@ -233,7 +241,8 @@ define([
             this.$photosContainer.parent().mousewheel(_.bind(this.onPhotosMouseWheel,this));
 
             this.scaleHelper = new ScaleHelper({el:this.$photosContainer});
-
+            
+            
         },
 
         addDirectory : function(pathOpts) {
@@ -331,6 +340,7 @@ define([
             var groupView = new PhotoGroupView({
                 model : photoGroup
             });
+            
             groupView.render();
             this.initializeGroupDragAndDrop(groupView);
             this.distributeGroupHeights();
@@ -371,11 +381,7 @@ define([
                     distance=mouseOffset-imgLeft;
                     var dist=(delta>0?1:-1)*distance;
                     mouseOffset=imgLeft+dist;
-                    
-                    
                 }
-                
-                
                 
                 
                 this.photosScale(undefined, delta>0?1:-1, mouseOffset, true);
@@ -417,6 +423,35 @@ define([
             }else{
                 ctEl.width(newWidth);
                 scrollEl.scrollLeft(newScrollLeft);
+            }
+        },
+        
+        onGroupTimeAdjusted:function(model){
+            var sameTs=(model.get('firstTs') == model.get('originalFirstTs'));
+            if((!this.showNextEnabled && sameTs) || (this.showNextEnabled && !sameTs)){
+                return
+            }
+            
+            var index=this.photoGroups.find(function(item){
+                return item.get('firstTs')!=item.get('originalFirstTs');
+            });
+            this.enableActionNext(index!=undefined);
+        },
+        
+        enableActionNext:function(enable){
+            var el=$('.action-next');
+            this.showNextEnabled=(enable!==false);
+            if (this.showNextEnabled){
+                el.removeClass('disabled');
+            }else{
+                el.addClass('disabled');
+            }
+        },
+        
+        onActionNextClick:function(event){
+            var tgt=$(event.currentTarget);
+            if (tgt.hasClass('disabled')){
+                return;
             }
         }
     });

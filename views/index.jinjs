@@ -20,8 +20,11 @@
                 <ul></ul>
             </div>
         </div>
-        <div class="timeline"></div>
-        <div class="wizardnav"></div>
+        <div class="timeline">
+            <div class="dd"></div>
+            <div class="mask"></div>
+        </div>
+        <div class="wizardnav"><ul class="actions"><li class="disabled action action-next"><span>I'm done!</span></li></ul></div>
     </div>
     <div id="photoSave" style="display:none">
     </div>

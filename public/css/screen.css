@@ -1,1 +1,719 @@
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}body{line-height:1}ol,ul{list-style:none}table{border-collapse:collapse;border-spacing:0}caption,th,td{text-align:left;font-weight:normal;vertical-align:middle}q,blockquote{quotes:none}q:before,q:after,blockquote:before,blockquote:after{content:"";content:none}a img{border:none}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary{display:block}@font-face{font-family:PhotoSyncIcons;src:url("photosync_icons.ttf")}.icon:before{font-family:'PhotoSyncIcons'}.icon-pictures:before{content:'\0021'}.icon-folder:before{content:'\0022'}.icon-plus:before{content:'\0023'}.icon-down:before{content:'\0024'}.icon-up:before{content:'\0025'}.icon-circle-refresh:before,#photoSync li.timeadjuster div.adjuster-wrapper>span.plusminus:hover:before{content:'\0026'}.icon-minus:before{content:'\0027'}.icon-close:before{content:'\0028'}.icon-exit:before{content:'\0029'}body{font-family:sans-serif}#page-wrapper{background:#F0F0F0;-webkit-border-radius:10px;-moz-border-radius:10px;-ms-border-radius:10px;-o-border-radius:10px;border-radius:10px;-webkit-box-shadow:#a0a0a0 1px 1px 4px;-moz-box-shadow:#a0a0a0 1px 1px 4px;box-shadow:#a0a0a0 1px 1px 4px;position:absolute;top:10px;bottom:20px;left:10px;right:10px;overflow:auto}.logo{position:absolute;left:10px;top:10px}.logo h1{font-size:30px;font-family:Sans-serif;text-shadow:1px 1px 1px #a0a0a0}.logo h1.icon:before{margin-right:10px;font-size:50px;float:left}.logo .tagline{font-size:13px;padding-left:54px;color:#666666;font-style:italic;margin-top:2px;text-shadow:1px 1px 1px #fff}.tools{position:absolute;z-index:4;right:10px;top:10px;left:350px}.tools li{width:40px;height:40px;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;display:block;float:left;background-color:#999;margin-right:40px;position:relative;cursor:pointer}.tools li.icon:before{color:white;font-size:26px;display:block;margin:8px}.tools li span{font-weight:bold;color:#777;display:block;position:absolute;bottom:-1em;left:-30px;width:100px;text-align:center;font-size:12px;text-shadow:0 0 2px #fff}footer{position:absolute;right:10px;bottom:4px;font-size:10px;color:#666}#photoSync{position:absolute;top:70px;bottom:10px;right:10px;left:10px}#photoSync .photos{position:absolute;top:0;bottom:10%;left:0px;right:0px;overflow:hidden;-webkit-border-radius:2px;-moz-border-radius:2px;-ms-border-radius:2px;-o-border-radius:2px;border-radius:2px;border:1px solid #E0E0E0}#photoSync .cameras{position:absolute;top:0;left:0;bottom:0;width:30px;z-index:100;background:#F0F0F0}#photoSync .cameras ul{height:100%}#photoSync .cameras ul li{height:178px;display:block;font-size:11px;-webkit-box-shadow:#ccc -1px -1px 0 0 inset;-moz-box-shadow:#ccc -1px -1px 0 0 inset;box-shadow:#ccc -1px -1px 0 0 inset;overflow:hidden;position:relative;white-space:nowrap;overflow:hidden;-ms-text-overflow:ellipsis;-o-text-overflow:ellipsis;text-overflow:ellipsis;white-space:nowrap}#photoSync .cameras ul li:after{content:'';position:absolute;top:0px;left:0px;right:1px;height:20px;border-top:1px solid #FFF;background-color:#F0F0F0;background:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f0f0f0), color-stop(100%, rgba(240,240,240,0)));background:-webkit-linear-gradient(#f0f0f0,rgba(240,240,240,0));background:-moz-linear-gradient(#f0f0f0,rgba(240,240,240,0));background:-o-linear-gradient(#f0f0f0,rgba(240,240,240,0));background:-ms-linear-gradient(#f0f0f0,rgba(240,240,240,0));background:linear-gradient(#f0f0f0,rgba(240,240,240,0));z-index:1}#photoSync .cameras ul li span{-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-ms-transform:rotate(-90deg);-o-transform:rotate(-90deg);transform:rotate(-90deg);-webkit-transform-origin:0 0;-moz-transform-origin:0 0;-ms-transform-origin:0 0;-o-transform-origin:0 0;transform-origin:0 0;position:absolute;top:0px;display:block;width:500px;padding-left:2px;left:6px;top:98%;text-align:left}#photoSync .timeadjust{color:#666;position:absolute;right:0px;top:0px;width:200px;bottom:0;background-color:#F0F0F0;z-index:100}#photoSync .timeadjust ul{position:absolute;top:0;left:0;right:0;bottom:0}#photoSync li.timeadjuster{position:relative;-webkit-box-shadow:#ccc 1px -1px 0 0 inset,#fff 0 1px 0 0 inset;-moz-box-shadow:#ccc 1px -1px 0 0 inset,#fff 0 1px 0 0 inset;box-shadow:#ccc 1px -1px 0 0 inset,#fff 0 1px 0 0 inset}#photoSync li.timeadjuster div.adjuster-wrapper{position:absolute;top:50%;bottom:50%;left:0;right:0;margin-top:-26px}#photoSync li.timeadjuster div.adjuster-wrapper>span{float:left;position:relative;display:block;width:44px;height:40px}#photoSync li.timeadjuster div.adjuster-wrapper>span .value{display:block;height:100%}#photoSync li.timeadjuster div.adjuster-wrapper>span.plusminus{width:20px;height:20px;margin-top:10px;text-align:right;cursor:pointer;color:#999}#photoSync li.timeadjuster div.adjuster-wrapper>span.plusminus.plusminus:hover:before{color:#990000}#photoSync li.timeadjuster .modifiers{position:absolute;top:0px;right:0;line-height:10px}#photoSync li.timeadjuster .modifiers>span{cursor:pointer;display:block;width:12px;height:12px;margin-bottom:4px}#photoSync li.timeadjuster .modifiers>span:before{font-size:12px}#photoSync li.timeadjuster span.label{display:block;position:absolute;bottom:0px;left:0;right:0px;text-align:center;font-size:11px;font-weight:normal}#photoSync li.timeadjuster span.number{-webkit-user-select:text !important;-moz-user-select:text !important;user-select:text !important;position:absolute;left:-2px;right:10px;width:32px;top:2px;color:#333;background:none;border:none;display:block;text-align:right;font-size:26px}#photoSync .photo-ct-outer{position:absolute;top:0;bottom:0;left:30px;right:200px;overflow-x:hidden;overflow-y:hidden;background-color:#F9F9F9}#photoSync .time-dividers{position:absolute;z-index:0;left:0;top:0;bottom:0}#photoSync .time-dividers>div{display:none;position:absolute;top:0;left:0;right:0;bottom:0}#photoSync .time-dividers>div.active{display:block}#photoSync .time-dividers div.divider{position:absolute;top:0px;border-left:2px solid #D6D6D6;height:100%;width:0}#photoSync .time-dividers div.divider span.timestring{display:block;position:absolute;width:300px;right:14px;top:4px;font-size:10px;font-weight:bold;color:#909090;text-align:right;height:12px;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-ms-transform:rotate(-90deg);-o-transform:rotate(-90deg);transform:rotate(-90deg);-webkit-transform-origin:100% 0;-moz-transform-origin:100% 0;-ms-transform-origin:100% 0;-o-transform-origin:100% 0;transform-origin:100% 0}#photoSync .time-dividers div.divider span.timestring span.secondary{display:none}#photoSync .time-dividers div.next div.divider{border-left:1px solid #E6E6E6}#photoSync .time-dividers div.next div.divider span.timestring{font-weight:normal;color:#B0B0B0}#photoSync .time-dividers div.next div.divider span.timestring span.primary{display:none}#photoSync .time-dividers div.next div.divider span.timestring span.secondary{display:inline}#photoSync .photos-ct{height:100%}#photoSync .photostream{position:relative;-webkit-box-shadow:#e6e6e6 0px -1px 0 0 inset,#fff 0 1px 0 0 inset;-moz-box-shadow:#e6e6e6 0px -1px 0 0 inset,#fff 0 1px 0 0 inset;box-shadow:#e6e6e6 0px -1px 0 0 inset,#fff 0 1px 0 0 inset;width:100%}#photoSync .photostream ul{position:absolute;top:0;bottom:0;background-color:rgba(0,0,255,0.1)}#photoSync .photostream ul li{position:absolute;top:0px;bottom:0px}#photoSync .photostream ul li:nth-child(3n+2){top:8%}#photoSync .photostream ul li:nth-child(3n+3){top:16%}#photoSync .photostream ul li:nth-child(3n+4){top:24%}#photoSync .photostream span.image{z-index:2;position:relative;top:0;left:-50%;display:block;background:white;-webkit-box-shadow:#aaa 1px 1px 3px;-moz-box-shadow:#aaa 1px 1px 3px;box-shadow:#aaa 1px 1px 3px;padding:8px;cursor:default}#photoSync .photostream span.image img{-webkit-box-shadow:#ccc 0 0 2px;-moz-box-shadow:#ccc 0 0 2px;box-shadow:#ccc 0 0 2px;display:block}#photoSync .photostream span.image:hover{z-index:10}#photoSync .photostream span.metadata{display:none}#photoSync .timeadjust .modifiers>span{opacity:0.4}#photoSync .timeadjust .modifiers>span:hover{opacity:0.8;-webkit-transition:opacity 0.4s;-moz-transition:opacity 0.4s;-ms-transition:opacity 0.4s;-o-transition:opacity 0.4s;transition:opacity 0.4s}.ui-draggable{cursor:grab;cursor:-moz-grab;cursor:-webkit-grab}.ui-draggable-dragging{cursor:grabbing;cursor:-moz-grabbing;cursor:-webkit-grabbing}.tools li{-webkit-transition:background-color 0.4s,box-shadow 0.4s;-moz-transition:background-color 0.4s,box-shadow 0.4s;-ms-transition:background-color 0.4s,box-shadow 0.4s;-o-transition:background-color 0.4s,box-shadow 0.4s;transition:background-color 0.4s,box-shadow 0.4s}.tools li span{visibility:hidden;opacity:0;-webkit-transition:opacity 0.4s,visibility 0s ease 0.4s;-moz-transition:opacity 0.4s,visibility 0s ease 0.4s;-ms-transition:opacity 0.4s,visibility 0s ease 0.4s;-o-transition:opacity 0.4s,visibility 0s ease 0.4s;transition:opacity 0.4s,visibility 0s ease 0.4s}.tools li:hover{background-color:#777;-webkit-box-shadow:0 0 4px #444;-moz-box-shadow:0 0 4px #444;box-shadow:0 0 4px #444;-webkit-transition:background-color 0.4s,box-shadow 0.4s;-moz-transition:background-color 0.4s,box-shadow 0.4s;-ms-transition:background-color 0.4s,box-shadow 0.4s;-o-transition:background-color 0.4s,box-shadow 0.4s;transition:background-color 0.4s,box-shadow 0.4s}.tools li:hover span{visibility:visible;opacity:1;-webkit-transition:opacity 0.4s;-moz-transition:opacity 0.4s;-ms-transition:opacity 0.4s;-o-transition:opacity 0.4s;transition:opacity 0.4s}#photoSync .timeadjust .modifiers>span{opacity:0.4}#photoSync .timeadjust .modifiers>span:hover{opacity:0.8;-webkit-transition:opacity 0.4s;-moz-transition:opacity 0.4s;-ms-transition:opacity 0.4s;-o-transition:opacity 0.4s;transition:opacity 0.4s}
+/* line 17, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../.rvm/gems/ruby-1.9.3-p194/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: PhotoSyncIcons;
+  src: url("photosync_icons.ttf");
+}
+
+/* line 7, ../sass/fonticons/photosync_icons.scss */
+.icon:before {
+  font-family: 'PhotoSyncIcons';
+}
+
+/* line 10, ../sass/fonticons/photosync_icons.scss */
+.icon-pictures:before {
+  content: '\0021';
+}
+
+/* line 11, ../sass/fonticons/photosync_icons.scss */
+.icon-folder:before {
+  content: '\0022';
+}
+
+/* line 12, ../sass/fonticons/photosync_icons.scss */
+.icon-plus:before {
+  content: '\0023';
+}
+
+/* line 13, ../sass/fonticons/photosync_icons.scss */
+.icon-down:before {
+  content: '\0024';
+}
+
+/* line 14, ../sass/fonticons/photosync_icons.scss */
+.icon-up:before {
+  content: '\0025';
+}
+
+/* line 15, ../sass/fonticons/photosync_icons.scss */
+.icon-arrow-right:before, #photoSync .wizardnav li.action-next:after {
+  content: '\0026';
+}
+
+/* line 16, ../sass/fonticons/photosync_icons.scss */
+.icon-circle-refresh:before, #photoSync li.timeadjuster div.adjuster-wrapper > span.plusminus:hover:before {
+  content: '\0027';
+}
+
+/* line 17, ../sass/fonticons/photosync_icons.scss */
+.icon-minus:before {
+  content: '\0028';
+}
+
+/* line 18, ../sass/fonticons/photosync_icons.scss */
+.icon-close:before {
+  content: '\0029';
+}
+
+/* line 19, ../sass/fonticons/photosync_icons.scss */
+.icon-exit:before {
+  content: '\002A';
+}
+
+/* line 20, ../sass/fonticons/photosync_icons.scss */
+.icon-arrow-left:before {
+  content: '\002B';
+}
+
+/* line 1, ../sass/layout/_body.scss */
+body {
+  font-family: sans-serif;
+}
+
+/* line 5, ../sass/layout/_body.scss */
+#page-wrapper {
+  background: #F0F0F0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: #a0a0a0 1px 1px 4px;
+  -moz-box-shadow: #a0a0a0 1px 1px 4px;
+  box-shadow: #a0a0a0 1px 1px 4px;
+  position: absolute;
+  top: 10px;
+  bottom: 20px;
+  left: 10px;
+  right: 10px;
+  overflow: auto;
+}
+
+/* line 1, ../sass/layout/_header.scss */
+.logo {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+/* line 5, ../sass/layout/_header.scss */
+.logo h1 {
+  font-size: 30px;
+  font-family: Sans-serif;
+  text-shadow: 1px 1px 1px #a0a0a0;
+}
+/* line 9, ../sass/layout/_header.scss */
+.logo h1.icon:before {
+  margin-right: 10px;
+  font-size: 50px;
+  float: left;
+}
+/* line 15, ../sass/layout/_header.scss */
+.logo .tagline {
+  font-size: 13px;
+  padding-left: 54px;
+  color: #666666;
+  font-style: italic;
+  margin-top: 2px;
+  text-shadow: 1px 1px 1px white;
+}
+
+/* line 24, ../sass/layout/_header.scss */
+.tools {
+  position: absolute;
+  z-index: 4;
+  right: 10px;
+  top: 10px;
+  left: 350px;
+}
+/* line 30, ../sass/layout/_header.scss */
+.tools li {
+  width: 40px;
+  height: 40px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  border-radius: 50px;
+  display: block;
+  float: left;
+  background-color: #999;
+  margin-right: 40px;
+  position: relative;
+  cursor: pointer;
+}
+/* line 40, ../sass/layout/_header.scss */
+.tools li.icon:before {
+  color: white;
+  font-size: 26px;
+  display: block;
+  margin: 8px;
+}
+/* line 47, ../sass/layout/_header.scss */
+.tools li span {
+  font-weight: bold;
+  color: #777;
+  display: block;
+  position: absolute;
+  bottom: -1em;
+  left: -30px;
+  width: 100px;
+  text-align: center;
+  font-size: 12px;
+  text-shadow: 0 0 2px white;
+}
+
+/* line 1, ../sass/layout/_footer.scss */
+footer {
+  position: absolute;
+  right: 10px;
+  bottom: 4px;
+  font-size: 10px;
+  color: #666;
+}
+
+/* line 7, ../sass/app/_photosync.scss */
+#photoSync {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  position: absolute;
+  top: 70px;
+  bottom: 10px;
+  right: 10px;
+  left: 10px;
+}
+/* line 15, ../sass/app/_photosync.scss */
+#photoSync .photos {
+  position: absolute;
+  top: 0;
+  bottom: 10%;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  border: 1px solid #E0E0E0;
+}
+/* line 27, ../sass/app/_photosync.scss */
+#photoSync .cameras {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  z-index: 100;
+  background: #F0F0F0;
+}
+/* line 35, ../sass/app/_photosync.scss */
+#photoSync .cameras ul {
+  height: 100%;
+}
+/* line 37, ../sass/app/_photosync.scss */
+#photoSync .cameras ul li {
+  height: 178px;
+  display: block;
+  font-size: 11px;
+  -webkit-box-shadow: #cccccc -1px -1px 0 0 inset;
+  -moz-box-shadow: #cccccc -1px -1px 0 0 inset;
+  box-shadow: #cccccc -1px -1px 0 0 inset;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 46, ../sass/app/_photosync.scss */
+#photoSync .cameras ul li:after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 1px;
+  height: 20px;
+  border-top: 1px solid #FFF;
+  background-color: #F0F0F0;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f0f0f0), color-stop(100%, rgba(240, 240, 240, 0)));
+  background: -webkit-linear-gradient(#f0f0f0, rgba(240, 240, 240, 0));
+  background: -moz-linear-gradient(#f0f0f0, rgba(240, 240, 240, 0));
+  background: -o-linear-gradient(#f0f0f0, rgba(240, 240, 240, 0));
+  background: linear-gradient(#f0f0f0, rgba(240, 240, 240, 0));
+  z-index: 1;
+}
+/* line 59, ../sass/app/_photosync.scss */
+#photoSync .cameras ul li span {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  transform-origin: 0 0;
+  position: absolute;
+  top: 0px;
+  display: block;
+  width: 500px;
+  padding-left: 2px;
+  left: 6px;
+  top: 98%;
+  text-align: left;
+}
+/* line 76, ../sass/app/_photosync.scss */
+#photoSync .timeadjust {
+  color: #666;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 200px;
+  bottom: 0;
+  background-color: #F0F0F0;
+  z-index: 100;
+}
+/* line 86, ../sass/app/_photosync.scss */
+#photoSync .timeadjust ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+/* line 94, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster {
+  position: relative;
+  -webkit-box-shadow: #cccccc 1px -1px 0 0 inset, white 0 1px 0 0 inset;
+  -moz-box-shadow: #cccccc 1px -1px 0 0 inset, white 0 1px 0 0 inset;
+  box-shadow: #cccccc 1px -1px 0 0 inset, white 0 1px 0 0 inset;
+}
+/* line 97, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster div.adjuster-wrapper {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 0;
+  right: 0;
+  margin-top: -26px;
+}
+/* line 103, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster div.adjuster-wrapper > span {
+  float: left;
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 40px;
+}
+/* line 109, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster div.adjuster-wrapper > span .value {
+  display: block;
+  height: 100%;
+}
+/* line 113, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster div.adjuster-wrapper > span.plusminus {
+  width: 20px;
+  height: 20px;
+  margin-top: 10px;
+  text-align: right;
+  cursor: pointer;
+  color: #999;
+}
+/* line 120, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster div.adjuster-wrapper > span.plusminus.plusminus:hover:before {
+  color: #990000;
+}
+/* line 128, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster .modifiers {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  line-height: 10px;
+}
+/* line 133, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster .modifiers > span {
+  cursor: pointer;
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-bottom: 4px;
+}
+/* line 138, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster .modifiers > span:before {
+  font-size: 12px;
+}
+/* line 144, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster span.label {
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: normal;
+}
+/* line 154, ../sass/app/_photosync.scss */
+#photoSync li.timeadjuster span.number {
+  position: absolute;
+  left: -2px;
+  right: 10px;
+  width: 32px;
+  top: 2px;
+  color: #333;
+  background: none;
+  border: none;
+  display: block;
+  text-align: right;
+  font-size: 26px;
+}
+/* line 173, ../sass/app/_photosync.scss */
+#photoSync .photo-ct-outer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30px;
+  right: 200px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: #F9F9F9;
+}
+/* line 184, ../sass/app/_photosync.scss */
+#photoSync .time-dividers {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+/* line 190, ../sass/app/_photosync.scss */
+#photoSync .time-dividers > div {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+/* line 198, ../sass/app/_photosync.scss */
+#photoSync .time-dividers > div.active {
+  display: block;
+}
+/* line 202, ../sass/app/_photosync.scss */
+#photoSync .time-dividers div.divider {
+  position: absolute;
+  top: 0px;
+  border-left: 2px solid #D6D6D6;
+  height: 100%;
+  width: 0;
+}
+/* line 208, ../sass/app/_photosync.scss */
+#photoSync .time-dividers div.divider span.timestring {
+  display: block;
+  position: absolute;
+  width: 300px;
+  right: 14px;
+  top: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #909090;
+  text-align: right;
+  height: 12px;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  -webkit-transform-origin: 100% 0;
+  -moz-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  -o-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+}
+/* line 221, ../sass/app/_photosync.scss */
+#photoSync .time-dividers div.divider span.timestring span.secondary {
+  display: none;
+}
+/* line 227, ../sass/app/_photosync.scss */
+#photoSync .time-dividers div.next div.divider {
+  border-left: 1px solid #E6E6E6;
+}
+/* line 229, ../sass/app/_photosync.scss */
+#photoSync .time-dividers div.next div.divider span.timestring {
+  font-weight: normal;
+  color: #B0B0B0;
+}
+/* line 232, ../sass/app/_photosync.scss */
+#photoSync .time-dividers div.next div.divider span.timestring span.primary {
+  display: none;
+}
+/* line 236, ../sass/app/_photosync.scss */
+#photoSync .time-dividers div.next div.divider span.timestring span.secondary {
+  display: inline;
+}
+/* line 245, ../sass/app/_photosync.scss */
+#photoSync .photos-ct {
+  height: 100%;
+}
+/* line 248, ../sass/app/_photosync.scss */
+#photoSync .photostream {
+  position: relative;
+  -webkit-box-shadow: #e6e6e6 0px -1px 0 0 inset, white 0 1px 0 0 inset;
+  -moz-box-shadow: #e6e6e6 0px -1px 0 0 inset, white 0 1px 0 0 inset;
+  box-shadow: #e6e6e6 0px -1px 0 0 inset, white 0 1px 0 0 inset;
+  width: 100%;
+}
+/* line 252, ../sass/app/_photosync.scss */
+#photoSync .photostream ul {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 255, 0.1);
+}
+/* line 257, ../sass/app/_photosync.scss */
+#photoSync .photostream ul li {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+}
+/* line 262, ../sass/app/_photosync.scss */
+#photoSync .photostream ul li:nth-child(3n+2) {
+  top: 8%;
+}
+/* line 265, ../sass/app/_photosync.scss */
+#photoSync .photostream ul li:nth-child(3n+3) {
+  top: 16%;
+}
+/* line 268, ../sass/app/_photosync.scss */
+#photoSync .photostream ul li:nth-child(3n+4) {
+  top: 24%;
+}
+/* line 275, ../sass/app/_photosync.scss */
+#photoSync .photostream span.image {
+  z-index: 2;
+  position: relative;
+  top: 0;
+  left: -50%;
+  display: block;
+  background: white;
+  -webkit-box-shadow: #aaaaaa 1px 1px 3px;
+  -moz-box-shadow: #aaaaaa 1px 1px 3px;
+  box-shadow: #aaaaaa 1px 1px 3px;
+  padding: 8px;
+  cursor: default;
+}
+/* line 284, ../sass/app/_photosync.scss */
+#photoSync .photostream span.image img {
+  -webkit-box-shadow: #cccccc 0 0 2px;
+  -moz-box-shadow: #cccccc 0 0 2px;
+  box-shadow: #cccccc 0 0 2px;
+  display: block;
+}
+/* line 288, ../sass/app/_photosync.scss */
+#photoSync .photostream span.image:hover {
+  z-index: 10;
+}
+/* line 294, ../sass/app/_photosync.scss */
+#photoSync .photostream span.metadata {
+  display: none;
+}
+/* line 299, ../sass/app/_photosync.scss */
+#photoSync .timeline {
+  position: absolute;
+  left: 30px;
+  top: 90%;
+  bottom: 0;
+  right: 200px;
+  background-color: #FFFFFF;
+}
+/* line 307, ../sass/app/_photosync.scss */
+#photoSync .wizardnav {
+  position: absolute;
+  right: 0;
+  top: 90%;
+  bottom: 0;
+  width: 200px;
+}
+/* line 313, ../sass/app/_photosync.scss */
+#photoSync .wizardnav ul.actions {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 0;
+  right: 0;
+}
+/* line 321, ../sass/app/_photosync.scss */
+#photoSync .wizardnav li.action-next {
+  position: absolute;
+  display: block;
+  right: 0;
+  top: -9px;
+  height: 18px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+  background-color: #999;
+  cursor: pointer;
+  padding: 4px 10px;
+  color: white;
+  text-shadow: 1px 1px 1px #666666;
+  font-size: 16px;
+}
+/* line 335, ../sass/app/_photosync.scss */
+#photoSync .wizardnav li.action-next.disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+/* line 340, ../sass/app/_photosync.scss */
+#photoSync .wizardnav li.action-next:after {
+  font-family: 'PhotoSyncIcons';
+  color: white;
+  margin-left: 10px;
+}
+
+/* line 1, ../sass/app/_effects.scss */
+#photoSync .timeadjust .modifiers > span {
+  opacity: 0.4;
+}
+/* line 3, ../sass/app/_effects.scss */
+#photoSync .timeadjust .modifiers > span:hover {
+  opacity: 0.8;
+  -webkit-transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+}
+
+/* line 4, ../sass/app/_base.scss */
+.ui-draggable {
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+/* line 7, ../sass/app/_base.scss */
+.ui-draggable-dragging {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+/* line 3, ../sass/layout/_effects.scss */
+.tools li {
+  -webkit-transition: background-color 0.4s, box-shadow 0.4s;
+  -moz-transition: background-color 0.4s, box-shadow 0.4s;
+  -o-transition: background-color 0.4s, box-shadow 0.4s;
+  transition: background-color 0.4s, box-shadow 0.4s;
+}
+/* line 6, ../sass/layout/_effects.scss */
+.tools li span {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s, visibility 0s ease;
+  -webkit-transition-delay: 0s, 0.4s;
+  -moz-transition: opacity 0.4s, visibility 0s ease 0.4s;
+  -o-transition: opacity 0.4s, visibility 0s ease 0.4s;
+  transition: opacity 0.4s, visibility 0s ease 0.4s;
+}
+/* line 13, ../sass/layout/_effects.scss */
+.tools li:hover {
+  background-color: #777;
+  -webkit-box-shadow: 0 0 4px #444444;
+  -moz-box-shadow: 0 0 4px #444444;
+  box-shadow: 0 0 4px #444444;
+  -webkit-transition: background-color 0.4s, box-shadow 0.4s;
+  -moz-transition: background-color 0.4s, box-shadow 0.4s;
+  -o-transition: background-color 0.4s, box-shadow 0.4s;
+  transition: background-color 0.4s, box-shadow 0.4s;
+}
+/* line 17, ../sass/layout/_effects.scss */
+.tools li:hover span {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+}
+
+/* line 1, ../sass/app/_effects.scss */
+#photoSync .timeadjust .modifiers > span {
+  opacity: 0.4;
+}
+/* line 3, ../sass/app/_effects.scss */
+#photoSync .timeadjust .modifiers > span:hover {
+  opacity: 0.8;
+  -webkit-transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+}
