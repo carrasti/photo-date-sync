@@ -124,7 +124,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* line 20, ../sass/fonticons/photosync_icons.scss */
-.icon-arrow-left:before {
+.icon-arrow-left:before, #photoSave .wizardnav li.action-previous:before {
   content: '\002B';
 }
 
@@ -234,8 +234,25 @@ footer {
   color: #666;
 }
 
-/* line 7, ../sass/app/_photosync.scss */
-#photoSync {
+/* line 1, ../sass/app/_base.scss */
+.abstract-photo, #photoSave .photostream span.image {
+  background: white;
+  -webkit-box-shadow: #aaaaaa 1px 1px 3px;
+  -moz-box-shadow: #aaaaaa 1px 1px 3px;
+  box-shadow: #aaaaaa 1px 1px 3px;
+  padding: 8px;
+  cursor: default;
+}
+/* line 5, ../sass/app/_base.scss */
+.abstract-photo img, #photoSave .photostream span.image img {
+  -webkit-box-shadow: #cccccc 0 0 2px;
+  -moz-box-shadow: #cccccc 0 0 2px;
+  box-shadow: #cccccc 0 0 2px;
+  display: block;
+}
+
+/* line 12, ../sass/app/_base.scss */
+.abstract-view, #photoSync, #photoSave {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
@@ -245,7 +262,61 @@ footer {
   right: 10px;
   left: 10px;
 }
-/* line 15, ../sass/app/_photosync.scss */
+
+/* line 22, ../sass/app/_base.scss */
+.abstract-wizardnav, #photoSync .wizardnav, #photoSave .wizardnav {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+/* line 26, ../sass/app/_base.scss */
+.abstract-wizardnav ul.actions, #photoSync .wizardnav ul.actions, #photoSave .wizardnav ul.actions {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 0;
+  right: 0;
+}
+/* line 34, ../sass/app/_base.scss */
+.abstract-wizardnav li.action, #photoSync .wizardnav li.action, #photoSave .wizardnav li.action {
+  width: 100px;
+  position: absolute;
+  display: block;
+  right: 0;
+  top: -9px;
+  height: 18px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+  background-color: #999;
+  cursor: pointer;
+  padding: 4px 10px;
+  color: white;
+  text-shadow: 1px 1px 1px #666666;
+  font-size: 16px;
+}
+/* line 49, ../sass/app/_base.scss */
+.abstract-wizardnav li.action.disabled, #photoSync .wizardnav li.action.disabled, #photoSave .wizardnav li.action.disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+/* line 53, ../sass/app/_base.scss */
+.abstract-wizardnav li.action:after, #photoSync .wizardnav li.action:after, #photoSave .wizardnav li.action:after, .abstract-wizardnav li.action:before, #photoSync .wizardnav li.action:before, #photoSave .wizardnav li.action:before {
+  font-family: 'PhotoSyncIcons';
+  color: white;
+}
+/* line 57, ../sass/app/_base.scss */
+.abstract-wizardnav li.action:after, #photoSync .wizardnav li.action:after, #photoSave .wizardnav li.action:after {
+  margin-left: 10px;
+}
+/* line 60, ../sass/app/_base.scss */
+.abstract-wizardnav li.action:before, #photoSync .wizardnav li.action:before, #photoSave .wizardnav li.action:before {
+  margin-right: 10px;
+}
+
+/* line 10, ../sass/app/_photosync.scss */
 #photoSync .photos {
   position: absolute;
   top: 0;
@@ -260,7 +331,7 @@ footer {
   border-radius: 2px;
   border: 1px solid #E0E0E0;
 }
-/* line 27, ../sass/app/_photosync.scss */
+/* line 22, ../sass/app/_photosync.scss */
 #photoSync .cameras {
   position: absolute;
   top: 0;
@@ -270,11 +341,11 @@ footer {
   z-index: 100;
   background: #F0F0F0;
 }
-/* line 35, ../sass/app/_photosync.scss */
+/* line 30, ../sass/app/_photosync.scss */
 #photoSync .cameras ul {
   height: 100%;
 }
-/* line 37, ../sass/app/_photosync.scss */
+/* line 32, ../sass/app/_photosync.scss */
 #photoSync .cameras ul li {
   height: 178px;
   display: block;
@@ -291,7 +362,7 @@ footer {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 46, ../sass/app/_photosync.scss */
+/* line 41, ../sass/app/_photosync.scss */
 #photoSync .cameras ul li:after {
   content: '';
   position: absolute;
@@ -308,7 +379,7 @@ footer {
   background: linear-gradient(#f0f0f0, rgba(240, 240, 240, 0));
   z-index: 1;
 }
-/* line 59, ../sass/app/_photosync.scss */
+/* line 54, ../sass/app/_photosync.scss */
 #photoSync .cameras ul li span {
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
@@ -329,7 +400,7 @@ footer {
   top: 98%;
   text-align: left;
 }
-/* line 76, ../sass/app/_photosync.scss */
+/* line 71, ../sass/app/_photosync.scss */
 #photoSync .timeadjust {
   color: #666;
   position: absolute;
@@ -340,7 +411,7 @@ footer {
   background-color: #F0F0F0;
   z-index: 100;
 }
-/* line 86, ../sass/app/_photosync.scss */
+/* line 81, ../sass/app/_photosync.scss */
 #photoSync .timeadjust ul {
   position: absolute;
   top: 0;
@@ -348,14 +419,14 @@ footer {
   right: 0;
   bottom: 0;
 }
-/* line 94, ../sass/app/_photosync.scss */
+/* line 89, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster {
   position: relative;
   -webkit-box-shadow: #cccccc 1px -1px 0 0 inset, white 0 1px 0 0 inset;
   -moz-box-shadow: #cccccc 1px -1px 0 0 inset, white 0 1px 0 0 inset;
   box-shadow: #cccccc 1px -1px 0 0 inset, white 0 1px 0 0 inset;
 }
-/* line 97, ../sass/app/_photosync.scss */
+/* line 92, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster div.adjuster-wrapper {
   position: absolute;
   top: 50%;
@@ -364,7 +435,7 @@ footer {
   right: 0;
   margin-top: -26px;
 }
-/* line 103, ../sass/app/_photosync.scss */
+/* line 98, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster div.adjuster-wrapper > span {
   float: left;
   position: relative;
@@ -372,12 +443,12 @@ footer {
   width: 44px;
   height: 40px;
 }
-/* line 109, ../sass/app/_photosync.scss */
+/* line 104, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster div.adjuster-wrapper > span .value {
   display: block;
   height: 100%;
 }
-/* line 113, ../sass/app/_photosync.scss */
+/* line 108, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster div.adjuster-wrapper > span.plusminus {
   width: 20px;
   height: 20px;
@@ -386,18 +457,18 @@ footer {
   cursor: pointer;
   color: #999;
 }
-/* line 120, ../sass/app/_photosync.scss */
+/* line 115, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster div.adjuster-wrapper > span.plusminus.plusminus:hover:before {
   color: #990000;
 }
-/* line 128, ../sass/app/_photosync.scss */
+/* line 123, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster .modifiers {
   position: absolute;
   top: 0px;
   right: 0;
   line-height: 10px;
 }
-/* line 133, ../sass/app/_photosync.scss */
+/* line 128, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster .modifiers > span {
   cursor: pointer;
   display: block;
@@ -405,11 +476,11 @@ footer {
   height: 12px;
   margin-bottom: 4px;
 }
-/* line 138, ../sass/app/_photosync.scss */
+/* line 133, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster .modifiers > span:before {
   font-size: 12px;
 }
-/* line 144, ../sass/app/_photosync.scss */
+/* line 139, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster span.label {
   display: block;
   position: absolute;
@@ -420,7 +491,7 @@ footer {
   font-size: 11px;
   font-weight: normal;
 }
-/* line 154, ../sass/app/_photosync.scss */
+/* line 149, ../sass/app/_photosync.scss */
 #photoSync li.timeadjuster span.number {
   position: absolute;
   left: -2px;
@@ -434,7 +505,7 @@ footer {
   text-align: right;
   font-size: 26px;
 }
-/* line 173, ../sass/app/_photosync.scss */
+/* line 168, ../sass/app/_photosync.scss */
 #photoSync .photo-ct-outer {
   position: absolute;
   top: 0;
@@ -445,7 +516,7 @@ footer {
   overflow-y: hidden;
   background-color: #F9F9F9;
 }
-/* line 184, ../sass/app/_photosync.scss */
+/* line 179, ../sass/app/_photosync.scss */
 #photoSync .time-dividers {
   position: absolute;
   z-index: 0;
@@ -453,7 +524,7 @@ footer {
   top: 0;
   bottom: 0;
 }
-/* line 190, ../sass/app/_photosync.scss */
+/* line 185, ../sass/app/_photosync.scss */
 #photoSync .time-dividers > div {
   display: none;
   position: absolute;
@@ -462,11 +533,11 @@ footer {
   right: 0;
   bottom: 0;
 }
-/* line 198, ../sass/app/_photosync.scss */
+/* line 193, ../sass/app/_photosync.scss */
 #photoSync .time-dividers > div.active {
   display: block;
 }
-/* line 202, ../sass/app/_photosync.scss */
+/* line 197, ../sass/app/_photosync.scss */
 #photoSync .time-dividers div.divider {
   position: absolute;
   top: 0px;
@@ -474,7 +545,7 @@ footer {
   height: 100%;
   width: 0;
 }
-/* line 208, ../sass/app/_photosync.scss */
+/* line 203, ../sass/app/_photosync.scss */
 #photoSync .time-dividers div.divider span.timestring {
   display: block;
   position: absolute;
@@ -497,32 +568,32 @@ footer {
   -o-transform-origin: 100% 0;
   transform-origin: 100% 0;
 }
-/* line 221, ../sass/app/_photosync.scss */
+/* line 216, ../sass/app/_photosync.scss */
 #photoSync .time-dividers div.divider span.timestring span.secondary {
   display: none;
 }
-/* line 227, ../sass/app/_photosync.scss */
+/* line 222, ../sass/app/_photosync.scss */
 #photoSync .time-dividers div.next div.divider {
   border-left: 1px solid #E6E6E6;
 }
-/* line 229, ../sass/app/_photosync.scss */
+/* line 224, ../sass/app/_photosync.scss */
 #photoSync .time-dividers div.next div.divider span.timestring {
   font-weight: normal;
   color: #B0B0B0;
 }
-/* line 232, ../sass/app/_photosync.scss */
+/* line 227, ../sass/app/_photosync.scss */
 #photoSync .time-dividers div.next div.divider span.timestring span.primary {
   display: none;
 }
-/* line 236, ../sass/app/_photosync.scss */
+/* line 231, ../sass/app/_photosync.scss */
 #photoSync .time-dividers div.next div.divider span.timestring span.secondary {
   display: inline;
 }
-/* line 245, ../sass/app/_photosync.scss */
+/* line 240, ../sass/app/_photosync.scss */
 #photoSync .photos-ct {
   height: 100%;
 }
-/* line 248, ../sass/app/_photosync.scss */
+/* line 243, ../sass/app/_photosync.scss */
 #photoSync .photostream {
   position: relative;
   -webkit-box-shadow: #e6e6e6 0px -1px 0 0 inset, white 0 1px 0 0 inset;
@@ -530,32 +601,32 @@ footer {
   box-shadow: #e6e6e6 0px -1px 0 0 inset, white 0 1px 0 0 inset;
   width: 100%;
 }
-/* line 252, ../sass/app/_photosync.scss */
+/* line 247, ../sass/app/_photosync.scss */
 #photoSync .photostream ul {
   position: absolute;
   top: 0;
   bottom: 0;
   background-color: rgba(0, 0, 255, 0.1);
 }
-/* line 257, ../sass/app/_photosync.scss */
+/* line 252, ../sass/app/_photosync.scss */
 #photoSync .photostream ul li {
   position: absolute;
   top: 0px;
   bottom: 0px;
 }
-/* line 262, ../sass/app/_photosync.scss */
+/* line 257, ../sass/app/_photosync.scss */
 #photoSync .photostream ul li:nth-child(3n+2) {
   top: 8%;
 }
-/* line 265, ../sass/app/_photosync.scss */
+/* line 260, ../sass/app/_photosync.scss */
 #photoSync .photostream ul li:nth-child(3n+3) {
   top: 16%;
 }
-/* line 268, ../sass/app/_photosync.scss */
+/* line 263, ../sass/app/_photosync.scss */
 #photoSync .photostream ul li:nth-child(3n+4) {
   top: 24%;
 }
-/* line 275, ../sass/app/_photosync.scss */
+/* line 270, ../sass/app/_photosync.scss */
 #photoSync .photostream span.image {
   z-index: 2;
   position: relative;
@@ -569,22 +640,22 @@ footer {
   padding: 8px;
   cursor: default;
 }
-/* line 284, ../sass/app/_photosync.scss */
+/* line 279, ../sass/app/_photosync.scss */
 #photoSync .photostream span.image img {
   -webkit-box-shadow: #cccccc 0 0 2px;
   -moz-box-shadow: #cccccc 0 0 2px;
   box-shadow: #cccccc 0 0 2px;
   display: block;
 }
-/* line 288, ../sass/app/_photosync.scss */
+/* line 283, ../sass/app/_photosync.scss */
 #photoSync .photostream span.image:hover {
   z-index: 10;
 }
-/* line 294, ../sass/app/_photosync.scss */
+/* line 289, ../sass/app/_photosync.scss */
 #photoSync .photostream span.metadata {
   display: none;
 }
-/* line 299, ../sass/app/_photosync.scss */
+/* line 294, ../sass/app/_photosync.scss */
 #photoSync .timeline {
   position: absolute;
   left: 30px;
@@ -593,51 +664,110 @@ footer {
   right: 200px;
   background-color: #FFFFFF;
 }
-/* line 307, ../sass/app/_photosync.scss */
+/* line 302, ../sass/app/_photosync.scss */
 #photoSync .wizardnav {
-  position: absolute;
-  right: 0;
   top: 90%;
-  bottom: 0;
-  width: 200px;
 }
-/* line 313, ../sass/app/_photosync.scss */
-#photoSync .wizardnav ul.actions {
-  position: absolute;
-  top: 50%;
-  bottom: 50%;
-  left: 0;
-  right: 0;
+/* line 305, ../sass/app/_photosync.scss */
+#photoSync .wizardnav li.action {
+  width: 100px;
 }
-/* line 321, ../sass/app/_photosync.scss */
+/* line 308, ../sass/app/_photosync.scss */
 #photoSync .wizardnav li.action-next {
+  text-align: right;
+}
+
+/*$row-height:180px;
+$cameras-width:30px;
+$timeadjust-width:200px;
+$timeline-height:10%;*/
+/* line 17, ../sass/app/_photosave.scss */
+#photoSave .photos {
+  padding: 10px;
   position: absolute;
+  top: 0;
+  bottom: 10%;
+  left: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  border: 1px solid #E0E0E0;
+  background: #F9F9F9;
+}
+/* line 32, ../sass/app/_photosave.scss */
+#photoSave .photostream span.image {
   display: block;
-  right: 0;
-  top: -9px;
-  height: 18px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
-  border-radius: 20px;
-  background-color: #999;
-  cursor: pointer;
-  padding: 4px 10px;
-  color: white;
-  text-shadow: 1px 1px 1px #666666;
-  font-size: 16px;
+  position: relative;
+  width: 120px;
+  height: 120px;
 }
-/* line 335, ../sass/app/_photosync.scss */
-#photoSync .wizardnav li.action-next.disabled {
-  opacity: 0.3;
-  cursor: default;
+/* line 39, ../sass/app/_photosave.scss */
+#photoSave .photostream span.image .img-overflow {
+  -webkit-box-shadow: #cccccc 0 0 2px;
+  -moz-box-shadow: #cccccc 0 0 2px;
+  box-shadow: #cccccc 0 0 2px;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  background: black;
 }
-/* line 340, ../sass/app/_photosync.scss */
-#photoSync .wizardnav li.action-next:after {
-  font-family: 'PhotoSyncIcons';
-  color: white;
-  margin-left: 10px;
+/* line 50, ../sass/app/_photosave.scss */
+#photoSave .photostream span.image .img-wrap-table {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: -20px;
+  top: -20px;
+  display: table;
+}
+/* line 58, ../sass/app/_photosave.scss */
+#photoSave .photostream span.image .img-wrap-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+/* line 62, ../sass/app/_photosave.scss */
+#photoSave .photostream span.image img {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: block;
+  margin: 0 auto;
+}
+/* line 68, ../sass/app/_photosave.scss */
+#photoSave .photostream span.metadata {
+  display: none;
+}
+/* line 71, ../sass/app/_photosave.scss */
+#photoSave .photostream li {
+  float: left;
+  width: 146px;
+  height: 146px;
+  display: block;
+  position: relative;
+  text-align: center;
+}
+/* line 81, ../sass/app/_photosave.scss */
+#photoSave .wizardnav {
+  height: 10%;
+  width: 300px;
+}
+/* line 86, ../sass/app/_photosave.scss */
+#photoSave .wizardnav li.action {
+  display: block;
+}
+/* line 89, ../sass/app/_photosave.scss */
+#photoSave .wizardnav li.action-finish {
+  text-align: right;
+}
+/* line 92, ../sass/app/_photosave.scss */
+#photoSave .wizardnav li.action-previous {
+  right: 130px;
 }
 
 /* line 1, ../sass/app/_effects.scss */
@@ -653,14 +783,14 @@ footer {
   transition: opacity 0.4s;
 }
 
-/* line 4, ../sass/app/_base.scss */
+/* line 74, ../sass/app/_base.scss */
 .ui-draggable {
   cursor: grab;
   cursor: -moz-grab;
   cursor: -webkit-grab;
 }
 
-/* line 7, ../sass/app/_base.scss */
+/* line 77, ../sass/app/_base.scss */
 .ui-draggable-dragging {
   cursor: grabbing;
   cursor: -moz-grabbing;
