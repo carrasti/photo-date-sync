@@ -1,0 +1,100 @@
+
+/*$row-height:180px;
+$cameras-width:30px;
+$timeadjust-width:200px;
+$timeline-height:10%;*/
+$savetools-height:10%;
+$savetools-width:300px;
+
+
+$photo-maxDimension:160px;
+$photo-minDimension:120px;
+
+#photoSave{
+    @extend .abstract-view;
+
+    //layout positioning
+    .photos{
+        padding:10px;
+        position:absolute;
+        top:0;
+        bottom:$savetools-height;
+        left:0px;
+        right:0px;
+        overflow:auto;
+        @include border-radius(2px);
+        border:1px solid #E0E0E0;
+        background:#F9F9F9;
+    }
+
+
+    .photostream{
+        span.image{
+            display:block;
+            @extend .abstract-photo;
+            position:relative;
+            width:$photo-minDimension;
+            height:$photo-minDimension;
+            
+            .img-overflow{
+                @include box-shadow(#CCC 0 0 2px);
+                width:$photo-minDimension;
+                height:$photo-minDimension;
+                overflow:hidden;
+                position:relative;
+                display: block;
+                background:black;
+            }
+            
+            
+            .img-wrap-table{
+                position:absolute;
+                width:$photo-maxDimension;
+                height:$photo-maxDimension;
+                left: -#{($photo-maxDimension - $photo-minDimension) /2};
+                top: -#{($photo-maxDimension - $photo-minDimension) /2};
+                display:table;
+            }
+            .img-wrap-cell{
+                display:table-cell;
+                vertical-align:middle;
+            }
+            img{
+                @include box-shadow(none);
+                display:block;
+                margin:0 auto;
+            }
+        }
+        span.metadata{
+            display:none;
+        }
+        li{
+            float:left;
+            width:$photo-minDimension + 26;
+            height: $photo-minDimension + 26;
+            display:block;
+            position:relative;
+            text-align:center; 
+        }
+    }
+    
+    .wizardnav{
+        @extend .abstract-wizardnav;
+        height:$savetools-height;
+        width:$savetools-width;
+        
+        li.action{
+            display:block;
+        }
+        li.action-finish{
+            text-align:right;    
+        }
+        li.action-previous{
+            right:$wizardnav-tool-width + 30;
+            &:before{
+                @extend .icon-arrow-left:before;
+            }
+        }
+    }
+    
+}

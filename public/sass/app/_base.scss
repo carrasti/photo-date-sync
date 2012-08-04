@@ -1,4 +1,74 @@
+.abstract-photo{
+    background:white;
+    @include box-shadow(#AAA 1px 1px 3px);
+    padding:8px;
+    img{
+        @include box-shadow(#CCC 0 0 2px);
+        display:block;
+    }
+    cursor:default;
+}
+
+.abstract-view{
+    @include user-select(none);
+    position:absolute;
+    top:70px;
+    bottom:10px;
+    right:10px;
+    left:10px;
+}
+
+$wizardnav-tool-width:100px;
+.abstract-wizardnav{
+    position:absolute;
+    right:0;
+    bottom:0;
+    ul.actions{
+        position:absolute;
+        top:50%;
+        bottom:50%;
+        left:0;
+        right:0;
+    }
+
+    li.action{
+        width:$wizardnav-tool-width;
+        position:absolute;
+        display:block;
+        right:0;
+        top:-9px;
+        height:18px;
+        @include border-radius(20px);
+        background-color:#999;
+        cursor:pointer;
+        padding:4px 10px;
+        color:white;
+        @include text-shadow(1px 1px 1px  #666);
+        font-size:16px;
+        
+        &.disabled{
+            opacity:0.3;
+            cursor:default;
+        }
+        &:after,&:before{
+            font-family: 'PhotoSyncIcons';
+            color:white;
+        }
+        &:after{
+            margin-left:10px;
+        }
+        &:before{
+            margin-right:10px;
+        }
+        
+        
+    }
+}
+
+
+
 @import "photosync";
+@import "photosave";
 @import "effects";
 
 .ui-draggable{

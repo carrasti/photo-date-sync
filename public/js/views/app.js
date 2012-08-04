@@ -5,8 +5,9 @@ define([
         'collections/tools',
         'views/app-tools',
         'views/photosync',
+        'views/photosave',
         'temp/sourcephotofolders'
-], function($, _, Backbone, ToolsCollection, AppToolsView, PhotoSyncView, photosList) {
+], function($, _, Backbone, ToolsCollection, AppToolsView, PhotoSyncView, PhotoSaveView,photosList) {
     var AppView = Backbone.View.extend({
         el : $('body'),
         contentEl : $('#content'),
@@ -40,23 +41,40 @@ define([
         },
 
         render : function() {
-            this.renderPhotoSync();
+            this.goToView('sync');
         },
-        renderPhotoSync : function() {
-            this.toolsCollection.add([
-                    {
-                        text : 'Add directory',
-                        cls : 'add_dir icon icon-folder'
-                    },
-                    {
-                        text : 'New project',
-                        cls : 'new_project icon icon-exit'
-                    }
-            ]);
-
-            if (!this.photoSyncView) {
+        
+        goToView:function(view){
+            switch(view){
+                case 'save':
+                    this.goToPhotoSave();
+                    break;
+                case 'sync':
+                    this.goToPhotoSync();
+                    break;
+            }
+        },
+        
+        
+        goToPhotoSync:function(){
+            if (this.photoSyncView){
+                if (this.photoSyncView.$el.filter(':hidden').length==0){
+                    return
+                }
+            }else{
                 this.photoSyncView = new PhotoSyncView();
+                this.photoSyncView.on('gonext',function(){
+                    this.goToView('save');
+                },this);
+                        
                 this.photoSyncView.render();
+                
+                //temporary until selection of directories is implemented
+                _.each(photosList,function(item, index){
+                    this.photoSyncView.addDirectory({
+                        path: item
+                    });
+                },this);
             }
 
             this.photoSyncView.$el.show();
@@ -64,19 +82,41 @@ define([
             if (this.photoSaveView) {
                 this.photoSaveView.$el.hide();
             }
-
-            //temporary until selection of directories is implemented
-            _.each(photosList,function(item, index){
-                this.photoSyncView.addDirectory({
-                    path: item
-                });
-            },this)
-
-
-
-
+            
+            this.toolsCollection.reset([
+                                        {
+                                            text : 'Add directory',
+                                            cls : 'add_dir icon icon-folder'
+                                        },
+                                        {
+                                            text : 'New project',
+                                            cls : 'new_project icon icon-exit'
+                                        }
+                                ]);
         },
+        goToPhotoSave:function(){
+            if (this.photoSaveView){
+                if (this.photoSaveView.$el.filter(':hidden').length==0){
+                    return
+                }
+            }else{
+                this.photoSaveView = new PhotoSaveView();
+                this.photoSaveView.on('gosync',function(){
+                    this.goToView('sync');
+                },this);
+                this.photoSyncView.render();
+            }
+            
+            this.photoSaveView.updatePhotoList(this.photoSyncView.photoGroups);
+            
+            this.photoSaveView.$el.show();
 
+            if (this.photoSyncView) {
+                this.photoSyncView.$el.hide();
+            }
+            
+            this.toolsCollection.reset([]);
+        },
         onToolClicked : function(event) {
             var target = event.currentTarget;
             var m = target.className.match(/^([^\s]+)\s/);

@@ -5,12 +5,7 @@ $timeadjust-width:200px;
 $timeline-height:10%;
 
 #photoSync{
-    @include user-select(none);
-    position:absolute;
-    top:70px;
-    bottom:10px;
-    right:10px;
-    left:10px;
+    @extend .abstract-view;
 
     .photos{
         position:absolute;
@@ -305,43 +300,15 @@ $timeline-height:10%;
         background-color:#FFFFFF;
     }
     .wizardnav{
-        position:absolute;
-        right:0;
+        @extend .abstract-wizardnav;
         top:100-$timeline-height;
-        bottom:0;
-        width:$timeadjust-width;
-        ul.actions{
-            position:absolute;
-            top:50%;
-            bottom:50%;
-            left:0;
-            right:0;
+        li.action{
+            width:100px;
         }
-        
         li.action-next{
-            position:absolute;
-            display:block;
-            right:0;
-            top:-9px;
-            height:18px;
-            @include border-radius(20px);
-            background-color:#999;
-            cursor:pointer;
-            padding:4px 10px;
-            color:white;
-            @include text-shadow(1px 1px 1px  #666);
-            font-size:16px;
-            
-            &.disabled{
-                opacity:0.3;
-                cursor:default;
-            }
-            
+            text-align:right;
             &:after{
-                font-family: 'PhotoSyncIcons';
                 @extend .icon-arrow-right:before;
-                color:white;
-                margin-left:10px;
             }
         }
     }

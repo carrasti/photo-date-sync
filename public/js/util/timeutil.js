@@ -100,9 +100,9 @@ define(function(){
                 return tsStart+ (pct/100*length);
             },
             tsDividerToStr:function(type,ts){
-                var d=new Date(ts+this.TS_OFFSET);
+                var d=new Date(ts);
                 
-                var date=d.getDay()+' '+this.MONTHS_SHORT[d.getMonth()]+' '+ d.getFullYear();
+                var date=d.getDate()+' '+this.MONTHS_SHORT[d.getMonth()]+' '+ d.getFullYear();
                 
                 var min=d.getMinutes()+'',hour=d.getHours()+'',secs=d.getSeconds()+'';
                 min=min.length==2?min:'0'+min;
@@ -134,7 +134,7 @@ define(function(){
             
             
     };
-    TimeUtil.MONTHS_SHORT=['Jan','Feb','Mar','Apr','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    TimeUtil.MONTHS_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     TimeUtil.DIVIDERS_ORDER=['days','halfdays','hours','halfhours','quarterhours','minutes','halfminutes','seconds'];
     TimeUtil.DIVIDERS={
             'days': TimeUtil.DAY,

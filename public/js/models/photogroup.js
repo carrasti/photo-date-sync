@@ -34,7 +34,6 @@ define([
             var pCol = this.photosCollection, margin = this.get('blockMargin');
             startTs = startTs || this.get('timelineFirstTs')+margin;
             endTs = endTs || this.get('timelineLastTs')-margin;
-            pCol.sort();
             var oldTlFirstTs = this.get('timelineFirstTs'), newTlFirstTs = startTs - margin;
             var oldTlLastTs = this.get('timelineLastTs'), newTlLastTs = endTs + margin;
             var oldOriginalFirstTs = this.get('originalFirstTs'), newOriginalFirstTs = pCol.first().getTs() - margin;
