@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1000"
+   height="1000"
+   id="svg3282"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="clock.svg">
+  <defs
+     id="defs3284" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.21"
+     inkscape:cx="-1391.199"
+     inkscape:cy="329.93973"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1680"
+     inkscape:window-height="983"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3287">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-52.362183)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path3246"
+       style="fill:#100f0d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 829.77731,419.02954 c -56.63288,0 -181.65332,4.99407 -181.65332,4.99407 l 9.86393,-154.11257 c 0,-94.53703 -17.99771,-137.1674 -69.20807,-137.1674 -63.5002,0 -37.88605,77.23482 -58.41657,144.12368 C 509.81493,343.57844 398.92145,478.2488 318.72574,478.2488 l -16.20861,0 0,395.09196 c 113.31395,0 115.00846,98.63996 217.44712,98.63996 65.40871,0 208.46248,0 208.46248,0 102.97377,0 215.91843,-91.14815 215.91843,-170.16677 l 0,-237.9474 c 0,-89.89847 -36.01315,-144.83701 -114.56785,-144.83701 z m -774.122467,104.52515 0,302.33938 c 0,29.25337 14.171589,47.44669 44.013152,47.44669 0,0 99.909325,0 153.476015,0 l 0,-395.09196 -154.819169,0 c -31.87852,0 -42.669998,24.25852 -42.669998,45.30589" />
+  </g>
+</svg>
