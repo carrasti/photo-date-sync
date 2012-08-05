@@ -65,6 +65,7 @@ define([
             this.requestImages(pathOpts.path);
         },
         requestImages : function(path) {
+            this.trigger('request_showmask',this,'wait','Loading pictures, please wait');
             $.ajax({
                 url : '/photolist',
                 type : 'GET',
@@ -124,19 +125,21 @@ define([
             
             //messing up
             var distance=lastTs-firstTs,paddedFirstTs=firstTs-distance,paddedLastTs=lastTs+distance;
-                
+            PhotoGroupView.disabledAnimations=true;
             this.photoGroups.each(function(photoGroup, index) {
                 // do this to check if it is initialized, with throttle sometimes the group is not initialized
                 if (photoGroup.id) {
                     photoGroup.updatePcts(paddedFirstTs, paddedLastTs);
                 }
-
             });
+            PhotoGroupView.disabledAnimations=false;
 
             //adjust the scale
             this.scaleHelper.set({firstTs:paddedFirstTs,lastTs:paddedLastTs});
-            this.scaleHelper.fitScale(firstTs,lastTs);
+            this.scaleHelper.fitScale(firstTs,lastTs,false);
 
+            this.trigger('request_hidemask',this);
+            
             delete (this.firstThrottleAvoided);
         }, 10),
         onPhotoGroupsAdd : function(photoGroup) {
@@ -225,7 +228,7 @@ define([
             if (tgt.hasClass('disabled')){
                 return;
             }
-            this.trigger('gonext',this);
+            this.trigger('gonext', this);
         }
     });
     return PhotoSyncView;

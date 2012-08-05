@@ -10,7 +10,8 @@ define([
         el : $('#photoSave'),
         
         events:{
-            'click .wizardnav .action-previous':'onPreviousClicked'
+            'click .wizardnav .action-previous':'onPreviousClicked',
+            'click .wizardnav .action-finish':'onFinishClicked'
         },
         
         photosCollection : undefined,
@@ -48,6 +49,9 @@ define([
         },
         onPreviousClicked:function(){
             this.trigger('gosync',this);
+        },
+        onFinishClicked:function(){
+            this.trigger('gosave',this,this.photosCollection);
         }
     });
     return PhotoSaveView;

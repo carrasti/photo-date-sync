@@ -1,8 +1,11 @@
 define([
         'jquery',
         'backbone',
-        'underscore'
-], function($, Backbone, _) {
+        'underscore',
+        'util/timeutil'
+        
+        
+], function($, Backbone, _,TimeUtil) {
 
     var Photo = Backbone.Model.extend({
         defaults : {
@@ -23,6 +26,12 @@ define([
         },
         getTs : function() {
             return this.has('date') ? this.get('date').getTime() : 0;
+        },
+        toJSON:function(){
+            return _.extend(Backbone.Model.prototype.toJSON.apply(this,arguments),{
+                timestr : TimeUtil.tsDividerToStr('minutes',this.getTs())
+            });
+            
         }
     });
     return Photo;

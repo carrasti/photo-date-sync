@@ -5,3 +5,119 @@
         @include transition(opacity 0.4s);
     }
 }
+
+.abstract-photo{
+    
+    &:hover{
+        span.metadata{
+            height:40%;
+            display:block;
+            @include transition(height 0.3s);
+        }
+    }
+    
+    &:active span.metadata, span.metadata{
+        height:0;
+        @include transition(height 0.3s);
+    }
+}
+
+@keyframes text-shadow-wait
+{
+0%   {text-shadow: #CCC 6px 6px 2px;}
+25%  {text-shadow: #CCC -6px 6px 2px;}
+50%  {text-shadow: #CCC -6px -6px 2px;}
+75%  {text-shadow: #CCC 6px -6px 2px;}
+100% {text-shadow: #CCC 6px 6px 2px;}
+}
+
+@-moz-keyframes text-shadow-wait /* Firefox */
+{
+0%   {text-shadow: #CCC 6px 6px 2px;}
+25%  {text-shadow: #CCC -6px 6px 2px;}
+50%  {text-shadow: #CCC -6px -6px 2px;}
+75%  {text-shadow: #CCC 6px -6px 2px;}
+100% {text-shadow: #CCC 6px 6px 2px;}
+}
+
+@-webkit-keyframes text-shadow-wait /* Safari and Chrome */
+{
+0%   {text-shadow: #CCC 6px 6px 2px;}
+25%  {text-shadow: #CCC -6px 6px 2px;}
+50%  {text-shadow: #CCC -6px -6px 2px;}
+75%  {text-shadow: #CCC 6px -6px 2px;}
+100% {text-shadow: #CCC 6px 6px 2px;}
+}
+
+@-o-keyframes text-shadow-wait /* Opera */
+{
+0%   {text-shadow: #CCC 6px 6px 2px;}
+25%  {text-shadow: #CCC -6px 6px 2px;}
+50%  {text-shadow: #CCC -6px -6px 2px;}
+75%  {text-shadow: #CCC 6px -6px 2px;}
+100% {text-shadow: #CCC 6px 6px 2px;}
+}
+
+.mask.type-wait .extra{
+    animation: text-shadow-wait 4s infinite linear;
+    -moz-animation: text-shadow-wait 4s infinite linear; /* Firefox */
+    -webkit-animation: text-shadow-wait 4s infinite linear; /* Safari and Chrome */
+    -o-animation: text-shadow-wait 4s infinite linear; /* Opera */
+}
+
+@keyframes text-shadow-success
+{
+0%   {text-shadow: #009900 0 0 1px;}
+20%   {text-shadow: #009900 0 0 1px;}
+50%  {text-shadow: #009900 0 0 10px;}
+80% {text-shadow: #009900 0 0 1px;}
+100%   {text-shadow: #009900 0 0 1px;}
+}
+
+@-moz-keyframes text-shadow-success
+{
+0%   {text-shadow: #009900 0 0 1px;}
+20%   {text-shadow: #009900 0 0 1px;}
+50%  {text-shadow: #009900 0 0 10px;}
+80% {text-shadow: #009900 0 0 1px;}
+100%   {text-shadow: #009900 0 0 1px;}
+}
+
+@-webkit-keyframes text-shadow-success /* Safari and Chrome */
+{
+0%   {text-shadow: #009900 0 0 1px;}
+20%   {text-shadow: #009900 0 0 1px;}
+50%  {text-shadow: #009900 0 0 10px;}
+80% {text-shadow: #009900 0 0 1px;}
+100%   {text-shadow: #009900 0 0 1px;}
+}
+
+@-o-keyframes text-shadow-success
+{
+0%   {text-shadow: #009900 0 0 1px;}
+20%   {text-shadow: #009900 0 0 1px;}
+50%  {text-shadow: #009900 0 0 10px;}
+80% {text-shadow: #009900 0 0 1px;}
+100%   {text-shadow: #009900 0 0 1px;}
+}
+
+.mask.type-success .extra{
+    text-shadow:none;
+    animation: text-shadow-success 2s infinite;
+    -moz-animation: text-shadow-success 2s infinite; /* Firefox */
+    -webkit-animation: text-shadow-success 2s infinite; /* Safari and Chrome */
+    -o-animation: text-shadow-wait 2s infinite; /* Opera */
+}
+.mask{
+    top:auto;
+    overflow:hidden;
+    height:0;
+    @include transition(height 0.3s);
+    &.displayed{
+        height:100%;
+        @include transition(height 0.3s);
+    }
+}   
+
+
+

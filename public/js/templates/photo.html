@@ -1,2 +1,4 @@
-<span class="image"><span class="img-overflow"><span class="img-wrap-table"><span class="img-wrap-cell"><img src="data:image/gif;base64,<%= thumbnail %>"></span></span></span></span>
-<span class="metadata"><span class="name"><%= name %></span><span class="date"><%= date %></span></span>
+<span class="image"><span class="img-overflow"><span class="img-wrap-table"><span class="img-wrap-cell"><img src="data:image/gif;base64,<%= thumbnail %>"></span></span></span>
+    <span class="metadata"><span class="metadata-wrap"><span class="name"><%= _.last(name.split('/')) %></span><span class="date"><%= timestr %></span><span class="camera"><%= cameraBrand %></span><span class="model"><%= cameraModel %></span></span></span>
+</span>
+

@@ -25,7 +25,7 @@ $timeline-height:10%;
         left:0;
         bottom:0;
         width:$cameras-width;
-        z-index:100;
+        z-index:20;
         background:#F0F0F0;
         ul{
             height:100%;
@@ -76,7 +76,7 @@ $timeline-height:10%;
         width:$timeadjust-width;
         bottom:0;
         background-color:#F0F0F0;
-        z-index:100;
+        z-index:20;
 
         ul{
             position:absolute;
@@ -265,29 +265,16 @@ $timeline-height:10%;
                 }
             }
         }
-
-
+        
         span.image{
+            @extend .abstract-photo;
             z-index:2;
             position:relative;
             top:0;
             left:-50%;
-            display:block;
-            background:white;
-            @include box-shadow(#AAA 1px 1px 3px);
-            padding:8px;
-            img{
-                @include box-shadow(#CCC 0 0 2px);
-                display:block;
-            }
             &:hover{
                 z-index:10;
             }
-            cursor:default;
-
-        }
-        span.metadata{
-            display:none;
         }
     }
 

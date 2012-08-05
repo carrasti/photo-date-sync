@@ -5,39 +5,45 @@
 {% endblock %}
 
 {% block content %}
-    <div id="photoSync" style="display:none">
-        <div class="photos">
-            <div class="cameras">
-                <ul>
-                </ul>
-            </div>
-            <div class="photo-ct-outer">
-                <div class="time-dividers"></div>
-                <div class="photos-ct">
+    <div id="views-wrapper">
+        <div class="mask">
+            <div class="message">Please wait</div>
+            <div class="extra"></div>
+        </div>
+        <div id="photoSync" style="display:none">
+            <div class="photos">
+                <div class="cameras">
+                    <ul>
+                    </ul>
+                </div>
+                <div class="photo-ct-outer">
+                    <div class="time-dividers"></div>
+                    <div class="photos-ct">
+                    </div>
+                </div>
+                <div class="timeadjust">
+                    <ul></ul>
                 </div>
             </div>
-            <div class="timeadjust">
-                <ul></ul>
+            <div class="timeline">
+                <div class="dd"></div>
+                <div class="mask"></div>
             </div>
+            <div class="wizardnav"><ul class="actions"><li class="disabled action action-next"><span>I'm done!</span></li></ul></div>
         </div>
-        <div class="timeline">
-            <div class="dd"></div>
-            <div class="mask"></div>
-        </div>
-        <div class="wizardnav"><ul class="actions"><li class="disabled action action-next"><span>I'm done!</span></li></ul></div>
-    </div>
-    <div id="photoSave" style="display:none">
-        <div class="photos">
-            <ul class="photostream">
+        <div id="photoSave" style="display:none">
+            <div class="photos">
+                <ul class="photostream">
+                
+                </ul>
+            </div>
+            <div class="wizardnav">
+                <ul class="actions">
+                    <li class="action action-previous"><span>Go back!</span></li>
+                    <li class="action action-finish"><span>Save them!</span></li>
+                </ul>
+            </div>
             
-            </ul>
         </div>
-        <div class="wizardnav">
-            <ul class="actions">
-                <li class="action action-previous"><span>Go back!</span></li>
-                <li class="action action-finish"><span>Save them!</span></li>
-            </ul>
-        </div>
-        
     </div>
 {% endblock %}

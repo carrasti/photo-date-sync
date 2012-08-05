@@ -24,11 +24,11 @@ define([
             this.activeDivider1=undefined;
             this.activeDivider2=undefined;
         },
-        fitScale:function(firstTs,lastTs){
+        fitScale:function(firstTs,lastTs,animate){
             firstTs=firstTs||this.get('firstTs');
             lastTs=lastTs||this.get('lastTs');
             this.set('currentScale',TimeUtil.scaleGetBest(firstTs,lastTs));
-            this.scale();
+            this.scale(undefined, undefined, undefined,animate);
         },
         scale:function(scale, scaleDiff, mousePageOffset, animate){
             scaleDiff=scaleDiff || 0;

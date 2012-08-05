@@ -101,13 +101,11 @@ define(function(){
             },
             tsDividerToStr:function(type,ts){
                 var d=new Date(ts);
+                var z=this.zeropad;                
                 
                 var date=d.getDate()+' '+this.MONTHS_SHORT[d.getMonth()]+' '+ d.getFullYear();
+                var min=z(d.getMinutes()+''),hour=z(d.getHours()+''),secs=z(d.getSeconds()+'');
                 
-                var min=d.getMinutes()+'',hour=d.getHours()+'',secs=d.getSeconds()+'';
-                min=min.length==2?min:'0'+min;
-                hour=hour.length==2?hour:'0'+hour;
-                secs=secs.length==2?secs:'0'+secs;
                 var dateHours=date+' '+hour+':'+min,dateSecs=dateHours+':'+secs;
                 
                 
@@ -130,10 +128,20 @@ define(function(){
                         return '<span class="primary">'+dateSecs+'</span><span class="secondary">'+d.getSeconds()+'s</span>';
                         break;
                 }
+            },
+            zeropad:function(num){
+                num=num+'';
+                return num.length==1?'0'+num:num;
+            },
+            parseExifDate:function(dateStr){
+                var parts = dateStr.match(/(\d+):(\d+):(\d+) (\d+):(\d+):(\d+)/);
+                return new Date(parseInt(parts[1], 10), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10), parseInt(parts[4], 10), parseInt(parts[5], 10), parseInt(parts[6], 10));
+            },
+            generateExifDate:function(date){
+                var z=this.zeropad;
+                return date.getFullYear()+':'+z(date.getMonth()+1)+':'+z(date.getDate())+' '+z(date.getHours())+':'+z(date.getMinutes())+':'+z(date.getSeconds());
             }
-            
-            
-    };
+        };
     TimeUtil.MONTHS_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     TimeUtil.DIVIDERS_ORDER=['days','halfdays','hours','halfhours','quarterhours','minutes','halfminutes','seconds'];
     TimeUtil.DIVIDERS={

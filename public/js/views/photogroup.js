@@ -5,7 +5,7 @@ define([
   'views/timeadjuster',
   'views/photo'
   ], function($, _, Backbone,TimeAdjusterView,PhotoView){
-  var PhotoSyncView = Backbone.View.extend({
+  var PhotoGroupView = Backbone.View.extend({
       tagName:'div',
       className:'distribute-height photostream',
 
@@ -35,22 +35,19 @@ define([
           this.$block.append(p.render().el);
       },
       onPctChange:function(model){
-          //if (model.dragging===true){
-          //    return;
-          //}
           var l=model.get('firstPct')+'%',r=(100-model.get('lastPct'))+'%';
-
-          if (model.dragging===true || this.animate!==true){
+          
+          if (model.dragging===true || this.animate!==true || PhotoGroupView.disabledAnimations===true){
               //do not animate
               this.$block.css({'left':l,'right':r});
           }else{
               //animate
               this.$block.stop();
               this.$block.animate({'left':l,'right':r},400);
-
           }
 
       }
   });
-  return PhotoSyncView;
+  PhotoGroupView.disabledAnimations=false;
+  return PhotoGroupView;
 });

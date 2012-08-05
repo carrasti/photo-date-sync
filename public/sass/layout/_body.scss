@@ -1,9 +1,11 @@
+$page-wrapper-background-color:#F0F0F0;
+
 body{
     font-family:sans-serif;
 }
 
 #page-wrapper {
-    background:#F0F0F0;
+    background:$page-wrapper-background-color;
     @include border-radius(10px);
     @include box-shadow(#A0A0A0 1px 1px 4px );
     position:absolute;

@@ -1,24 +1,90 @@
+$photo-maxDimension:160px;
+$photo-minDimension:120px;
+$photo-frame-width:8px;
+
+$view-wrapper-top:70px;
+$view-wrapper-left:10px;
+$view-wrapper-bottom:10px;
+$view-wrapper-right:10px;
+
+$wizardnav-tool-width:110px;
+
 .abstract-photo{
     background:white;
     @include box-shadow(#AAA 1px 1px 3px);
-    padding:8px;
-    img{
-        @include box-shadow(#CCC 0 0 2px);
-        display:block;
-    }
+    padding:$photo-frame-width;
+    display:block;
+    position:relative;
+    width:$photo-minDimension;
+    height:$photo-minDimension;
     cursor:default;
+    
+    .img-overflow{
+        @include box-shadow(#CCC 0 0 2px);
+        width:$photo-minDimension;
+        height:$photo-minDimension;
+        overflow:hidden;
+        position:relative;
+        display: block;
+        background:black;
+    }
+    
+    
+    .img-wrap-table{
+        position:absolute;
+        width:$photo-maxDimension;
+        height:$photo-maxDimension;
+        left: -#{($photo-maxDimension - $photo-minDimension) /2};
+        top: -#{($photo-maxDimension - $photo-minDimension) /2};
+        display:table;
+    }
+    .img-wrap-cell{
+        display:table-cell;
+        vertical-align:middle;
+    }
+    img{
+        @include box-shadow(none);
+        display:block;
+        margin:0 auto;
+    }
+    
+    &:hover{
+        span.metadata{
+            display:block;
+        }
+    }
+    
+    span.metadata{
+        display:block;
+        overflow:hidden;
+        position:absolute;
+        font-size:9px; 
+        bottom:$photo-frame-width;
+        left:$photo-frame-width;
+        right:$photo-frame-width;
+        color:white;
+        background-color:transparentize(black,0.4);
+        & > span{
+            padding:$photo-frame-width;
+        }
+        span{
+            display:block;
+        }
+        span.secondary{
+            display:none;
+        }
+    }
 }
 
 .abstract-view{
-    @include user-select(none);
     position:absolute;
-    top:70px;
-    bottom:10px;
-    right:10px;
-    left:10px;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
 }
 
-$wizardnav-tool-width:100px;
+
 .abstract-wizardnav{
     position:absolute;
     right:0;
@@ -69,7 +135,6 @@ $wizardnav-tool-width:100px;
 
 @import "photosync";
 @import "photosave";
-@import "effects";
 
 .ui-draggable{
     @include special-cursor(grab);
@@ -77,3 +142,42 @@ $wizardnav-tool-width:100px;
 .ui-draggable-dragging{
     @include special-cursor(grabbing);
 }
+
+#views-wrapper{
+    @include user-select(none);
+    position:absolute;
+    top:$view-wrapper-top;
+    bottom:$view-wrapper-bottom;
+    right:$view-wrapper-right;
+    left:$view-wrapper-left;
+}
+
+.mask{
+    @extend .abstract-view;
+    z-index:100;
+    background:$page-wrapper-background-color;
+    text-align:center;
+    font-size:40px;
+    color:#666;
+    @include text-shadow(#D0D0D0 2px 2px);
+    .message{
+        margin-top:40px;
+    }
+    .extra{
+            margin-top:40px;
+            &:after{
+                @extend .icon:before;
+                
+                font-size:200px;
+            }
+    }
+    &.type-wait .extra:after{   
+            @extend .icon-clock:before;
+    }
+    &.type-success .extra:after{   
+            @extend .icon-success:before;
+    }
+
+}
+
+@import "effects";

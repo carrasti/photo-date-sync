@@ -6,12 +6,15 @@ define([
         'views/app-tools',
         'views/photosync',
         'views/photosave',
-        'temp/sourcephotofolders'
-], function($, _, Backbone, ToolsCollection, AppToolsView, PhotoSyncView, PhotoSaveView,photosList) {
+        'util/timeutil',
+        'temp/sourcephotofolders',
+        'temp/destphotofolders'
+], function($, _, Backbone, ToolsCollection, AppToolsView, PhotoSyncView, PhotoSaveView,TimeUtil,sourcePhotosList,targetDirectory) {
     var AppView = Backbone.View.extend({
         el : $('body'),
         contentEl : $('#content'),
         toolsEl : $('.tools ul'),
+        maskEl : $('#content .mask'),
 
         // references to other views
         photoSyncView:undefined,
@@ -66,22 +69,29 @@ define([
                 this.photoSyncView.on('gonext',function(){
                     this.goToView('save');
                 },this);
-                        
+                this.photoSyncView.on('request_showmask',function(view,type,message){
+                    this.showMask(type,message);
+                },this);
+                this.photoSyncView.on('request_hidemask',function(){
+                    this.hideMask();
+                },this);
+                
                 this.photoSyncView.render();
                 
                 //temporary until selection of directories is implemented
-                _.each(photosList,function(item, index){
+                _.each(sourcePhotosList,function(item, index){
                     this.photoSyncView.addDirectory({
                         path: item
                     });
                 },this);
             }
-
-            this.photoSyncView.$el.show();
-
+            
             if (this.photoSaveView) {
                 this.photoSaveView.$el.hide();
             }
+            
+            this.photoSyncView.$el.show();
+            
             
             this.toolsCollection.reset([
                                         {
@@ -104,19 +114,32 @@ define([
                 this.photoSaveView.on('gosync',function(){
                     this.goToView('sync');
                 },this);
+                this.photoSaveView.on('gosave',function(view,collection){
+                    this.requestSave(collection);
+                },this);
                 this.photoSyncView.render();
             }
             
             this.photoSaveView.updatePhotoList(this.photoSyncView.photoGroups);
-            
-            this.photoSaveView.$el.show();
 
             if (this.photoSyncView) {
                 this.photoSyncView.$el.hide();
             }
-            
+            this.photoSaveView.$el.show();
             this.toolsCollection.reset([]);
         },
+        
+        requestSave:function(collection){
+            this.showMask('wait','Saving changes and generating album, please wait');
+            var data={};
+            collection.each(function(item,index){
+                data[item.get('name')]=index+'#'+TimeUtil.generateExifDate(item.get('date'));
+            });
+            data.targetDirectory = targetDirectory;
+            
+            console.debug(data);
+        },
+        
         onToolClicked : function(event) {
             var target = event.currentTarget;
             var m = target.className.match(/^([^\s]+)\s/);
@@ -131,7 +154,16 @@ define([
                     break;
             }
 
+        },
+        showMask:function(type, message){
+            this.maskEl.find('.message').html(message);
+            this.maskEl[0].className=this.maskEl[0].className.replace(/(^|\s)type-[^$\s]+(\s|$)/,'$1$2');
+            this.maskEl.addClass('displayed type-'+type);
+        },
+        hideMask:function(){
+            this.maskEl.removeClass('displayed');
         }
+        
     });
     return AppView;
 });
