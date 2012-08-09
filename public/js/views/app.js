@@ -137,9 +137,17 @@ define([
             });
             data.targetDirectory = targetDirectory;
             
-            console.debug(data);
+            $.ajax({
+                url : '/savephotolist',
+                type : 'POST',
+                data : data,
+                success : this.requestSaveSuccess,
+                context : this
+            });
         },
-        
+        requestSaveSuccess:function(){
+            this.showMask('success','Images saved to folder');
+        },
         onToolClicked : function(event) {
             var target = event.currentTarget;
             var m = target.className.match(/^([^\s]+)\s/);
