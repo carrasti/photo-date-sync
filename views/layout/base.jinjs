@@ -4,6 +4,7 @@
 
 {% block css_styles %}
 <link rel="stylesheet" href="css/screen.css">
+<link rel="prefetch" href="css/photosync_icons.ttf">
 {% endblock %}
 
 

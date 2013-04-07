@@ -30,6 +30,7 @@ app.configure('production', function(){
 
 // Routes
 app.get(/^\/photolist\/?/, routes.photoList);
+app.post(/^\/savephotolist\/?/, routes.savePhotos);
 app.get(/^\/photo(.*)/, routes.fsList);
 app.get('/', routes.index);
 
