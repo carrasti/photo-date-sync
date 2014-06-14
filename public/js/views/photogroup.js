@@ -36,7 +36,7 @@ define([
       },
       onPctChange:function(model){
           var l=model.get('firstPct')+'%',r=(100-model.get('lastPct'))+'%';
-          
+
           if (model.dragging===true || this.animate!==true || PhotoGroupView.disabledAnimations===true){
               //do not animate
               this.$block.css({'left':l,'right':r});

@@ -19,33 +19,17 @@ $wizardnav-tool-width:110px;
     height:$photo-minDimension;
     cursor:default;
     
-    .img-overflow{
+    .img-content{
         @include box-shadow(#CCC 0 0 2px);
         width:$photo-minDimension;
         height:$photo-minDimension;
         overflow:hidden;
         position:relative;
         display: block;
-        background:black;
-    }
-    
-    
-    .img-wrap-table{
-        position:absolute;
-        width:$photo-maxDimension;
-        height:$photo-maxDimension;
-        left: -#{($photo-maxDimension - $photo-minDimension) /2};
-        top: -#{($photo-maxDimension - $photo-minDimension) /2};
-        display:table;
-    }
-    .img-wrap-cell{
-        display:table-cell;
-        vertical-align:middle;
-    }
-    img{
-        @include box-shadow(none);
-        display:block;
-        margin:0 auto;
+        background-color:black;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
     
     &:hover{

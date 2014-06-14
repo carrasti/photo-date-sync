@@ -1,26 +1,26 @@
 (function(){
-    
+
     function getMetadata(filename, callback){
         var ex = require('exiv2'),
         im = require('imagemagick'),
         fs = require('fs'),
         spawn = require('child_process').spawn;
 
-        
+
         var loadedData={
                 metadataLoaded:false,
                 imageLoadad:true,
                 metadata:undefined,
                 image:undefined
         };
-        
+
         var finishProcessing=function(type,error,data){
             loadedData[type+'Loaded']=true;
             loadedData[type]=[error,data];
             if (!loadedData.metadataLoaded || !loadedData.imageLoaded){
                 return;
             }
-            
+
             var callbackData=null;
             if (!loadedData.metadata[0]){
                 callbackData=getMeaningfulData(loadedData.metadata[1]);
@@ -28,14 +28,14 @@
                     callbackData.Thumbnail=loadedData.image[1];
                 }
             }
-            
+
             callback(callbackData);
         };
-        
+
         ex.getImageTags(filename, function (error, metadata) {
             finishProcessing('metadata',error,metadata);
         });
-        
+
         var callbackImagePreviews=null;
         callbackImagePreviews=function(err, previews) {
             var data=previews;
@@ -45,40 +45,21 @@
                 finishProcessing('image',err,data);
             }else{
                 //generate the thumbnail if it does not exist
-                var tempImage='/tmp/photosync-img-'+(new Date().getTime())+'.jpg';
-                im.resize({
-                    srcData: fs.readFileSync(filename, 'binary'),
-                    dstPath:tempImage,
-                    width:   160,
-                    height:   160,
-                    format:'jpg'
-                  }, function(err, stdout, stderr){
-                    if (err){
+                var exiftoolsave  = spawn('exiftran',
+                            ['-g', '-i',filename]);
+
+                exiftoolsave.on('exit', function (code, signal) {
+                    if (code == 0){
+                        console.log('UPDATED thumbnail for ' + filename);
+                        ex.getImagePreviews(filename,callbackImagePreviews);
+                    }else{
+                        console.log('FAILED UPDATING thumbnail for ' + filename);
                         finishProcessing('image',err,null);
-                        return;
                     }
-                    
-                    //var fd =  fs.openSync("/tmp/manual-test"+(new Date().getTime())+'.jpg', 'w');
-                    //var buff = new Buffer(stdout, 'binary');
-                    
-                    /* in a child process save the metadata for the image */
-                    var exiftoolsave  = spawn('exiftool',
-                            ['-ThumbnailImage<='+tempImage,'-m', '-overwrite_original',filename]);
-                    
-                    exiftoolsave.on('exit', function (code, signal) {
-                        fs.unlink(tempImage);
-                        if (code == 0){
-                            console.log('UPDATED thumbnail for ' + filename);
-                            ex.getImagePreviews(filename,callbackImagePreviews);
-                        }else{
-                            console.log('FAILED UPDATING thumbnail for ' + filename);
-                            finishProcessing('image',err,null);
-                        }
-                    });
-                  });
+                });
             }
         };
-        
+
         ex.getImagePreviews(filename,callbackImagePreviews);
     }
     function getMeaningfulData(metadata){
@@ -92,7 +73,7 @@
         }
         return ret;
     }
-    
+
     exports.getMetadata=getMetadata;
-    
+
 })();

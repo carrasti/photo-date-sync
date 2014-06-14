@@ -18,23 +18,23 @@ define([
         photosCollection : undefined,
         noTsPhotosCollection : undefined,
         photoGroups : undefined,
-        
+
         showNextEnabled:false,
-        
+
         events:{
             'click .action-next' : 'onActionNextClick'
         },
-        
+
         initialize : function(opts) {
             opts = opts || {};
             var PhotoGroupCollection = Backbone.Collection.extend({
                 model : PhotoGroup
-            }); 
+            });
             this.photoGroups = new PhotoGroupCollection();
-            
+
             this.photoGroups.on('add', this.onPhotoGroupsAdd, this);
             this.photoGroups.on('change:firstTs',_.throttle(this.onGroupTimeAdjusted,500),this);
-            
+
             this.photosCollection = new PhotosCollection();
 
             this.noTsPhotosCollection = new PhotosCollection();
@@ -80,6 +80,14 @@ define([
             var noTsPhotos = [], tsPhotos = [];
             _.each(data.files, function(it, key, collection) {
                 var date = it['Exif.Photo.DateTimeDigitized'];
+                if (!date){
+                    date = it['Exif.Photo.DateTimeOriginal'];
+                }
+                if (!date){
+                    date = it['Exif.Image.DateTime'];
+                }
+
+
                 if (date) {
                     var parts = date.match(/(\d+):(\d+):(\d+) (\d+):(\d+):(\d+)/);
                     date = new Date(parseInt(parts[1], 10), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10), parseInt(parts[4], 10), parseInt(parts[5], 10), parseInt(parts[6], 10));
@@ -122,7 +130,7 @@ define([
             }
 
             var margin = this.timelineMargin, firstTs = this.photosCollection.first().getTs() - margin, lastTs = this.photosCollection.last().getTs() + margin;
-            
+
             //messing up
             var distance=lastTs-firstTs,paddedFirstTs=firstTs-distance,paddedLastTs=lastTs+distance;
             PhotoGroupView.disabledAnimations=true;
@@ -139,14 +147,14 @@ define([
             this.scaleHelper.fitScale(firstTs,lastTs,false);
 
             this.trigger('request_hidemask',this);
-            
+
             delete (this.firstThrottleAvoided);
         }, 10),
         onPhotoGroupsAdd : function(photoGroup) {
             var groupView = new PhotoGroupView({
                 model : photoGroup
             });
-            
+
             groupView.render();
             this.initializeGroupDragAndDrop(groupView);
             this.distributeGroupHeights();
@@ -188,7 +196,7 @@ define([
                     var dist=(delta>0?1:-1)*distance;
                     mouseOffset=imgLeft+dist;
                 }
-                
+
                 this.scaleHelper.scale(undefined, delta>0?1:-1, mouseOffset, true);
             }
         },
@@ -206,13 +214,13 @@ define([
             if((!this.showNextEnabled && sameTs) || (this.showNextEnabled && !sameTs)){
                 return
             }
-            
+
             var index=this.photoGroups.find(function(item){
                 return item.get('firstTs')!=item.get('originalFirstTs');
             });
             this.enableActionNext(index!=undefined);
         },
-        
+
         enableActionNext:function(enable){
             var el=$('.action-next');
             this.showNextEnabled=(enable!==false);
@@ -222,7 +230,7 @@ define([
                 el.addClass('disabled');
             }
         },
-        
+
         onActionNextClick:function(event){
             var tgt=$(event.currentTarget);
             if (tgt.hasClass('disabled')){

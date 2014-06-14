@@ -46,7 +46,7 @@ define([
         render : function() {
             this.goToView('sync');
         },
-        
+
         goToView:function(view){
             switch(view){
                 case 'save':
@@ -57,8 +57,8 @@ define([
                     break;
             }
         },
-        
-        
+
+
         goToPhotoSync:function(){
             if (this.photoSyncView){
                 if (this.photoSyncView.$el.filter(':hidden').length==0){
@@ -75,9 +75,9 @@ define([
                 this.photoSyncView.on('request_hidemask',function(){
                     this.hideMask();
                 },this);
-                
+
                 this.photoSyncView.render();
-                
+
                 //temporary until selection of directories is implemented
                 _.each(sourcePhotosList,function(item, index){
                     this.photoSyncView.addDirectory({
@@ -85,14 +85,14 @@ define([
                     });
                 },this);
             }
-            
+
             if (this.photoSaveView) {
                 this.photoSaveView.$el.hide();
             }
-            
+
             this.photoSyncView.$el.show();
-            
-            
+
+
             this.toolsCollection.reset([
                                         {
                                             text : 'Add directory',
@@ -119,7 +119,7 @@ define([
                 },this);
                 this.photoSyncView.render();
             }
-            
+
             this.photoSaveView.updatePhotoList(this.photoSyncView.photoGroups);
 
             if (this.photoSyncView) {
@@ -128,15 +128,15 @@ define([
             this.photoSaveView.$el.show();
             this.toolsCollection.reset([]);
         },
-        
+
         requestSave:function(collection){
-            this.showMask('wait','Saving changes and generating album, please wait');
+            //this.showMask('wait','Saving changes and generating album, please wait');
             var data={};
             collection.each(function(item,index){
                 data[item.get('name')]=index+'#'+TimeUtil.generateExifDate(item.get('date'));
             });
             data.targetDirectory = targetDirectory;
-            
+
             $.ajax({
                 url : '/savephotolist',
                 type : 'POST',
@@ -146,7 +146,8 @@ define([
             });
         },
         requestSaveSuccess:function(){
-            this.showMask('success','Images saved to folder');
+            alert('success!')
+            //this.showMask('success','Images saved to folder');
         },
         onToolClicked : function(event) {
             var target = event.currentTarget;
@@ -171,7 +172,7 @@ define([
         hideMask:function(){
             this.maskEl.removeClass('displayed');
         }
-        
+
     });
     return AppView;
 });

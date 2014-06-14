@@ -34,7 +34,6 @@
         <div id="photoSave" style="display:none">
             <div class="photos">
                 <ul class="photostream">
-                
                 </ul>
             </div>
             <div class="wizardnav">
@@ -43,7 +42,6 @@
                     <li class="action action-finish"><span>Save them!</span></li>
                 </ul>
             </div>
-            
         </div>
     </div>
 {% endblock %}

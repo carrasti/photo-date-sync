@@ -8,14 +8,14 @@ define([
 
     var PhotoSaveView = Backbone.View.extend({
         el : $('#photoSave'),
-        
+
         events:{
             'click .wizardnav .action-previous':'onPreviousClicked',
             'click .wizardnav .action-finish':'onFinishClicked'
         },
-        
+
         photosCollection : undefined,
-        
+
         initialize : function(opts) {
             this.photosCollection = new PhotosCollection();
             this.$photosCollectionEl=this.$el.find('.photostream');
@@ -23,22 +23,22 @@ define([
         updatePhotoList : function(photoGroupsCollection){
             this.photosCollection.reset();
             this.$photosCollectionEl.html('');
-            
+
             photoGroupsCollection.each(function(group){
                 var diff=group.get('firstTs')-group.get('originalFirstTs');
                 group.photosCollection.each(function(photo){
                     var copy=photo.clone();
-                    if (diff!==0){ 
+                    if (diff!==0){
                         copy.set('date',new Date(copy.getTs()+diff));
                     }
                     this.photosCollection.add(copy,{silent:true});
                 },this);
             },this);
-            
+
             this.photosCollection.sortBy(function(o){
                 return o.getTs();
             });
-            
+
             this.photosCollection.each(function(photo){
                 this.addPhotoView(photo);
             },this);

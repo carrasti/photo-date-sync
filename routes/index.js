@@ -10,7 +10,7 @@ exports.index = function(req, res) {
 exports.fsList = function(req, res) {
     var fs = require('fs');
     var path = req.params[0];
-    
+
     if (path == '') {
         path = '/';
     }
@@ -24,11 +24,11 @@ exports.fsList = function(req, res) {
             });
             retHeaders['Content-Type'] = 'text/plain';
         } else {
-            res.json({
+            res.json(500, {
                 error : err
-            }, 500);
+            });
         }
-        res.json(ret, {
+        res.json(200, ret, {
             'Content-Type' : 'text/plain'
         });
     });
@@ -63,7 +63,7 @@ exports.photoList = function(req, res) {
 
                 processingFiles--;
                 if (processingFiles === 0) {
-                    res.json(fileMetadata);
+                    res.json(200, fileMetadata);
                 }
             };
         };
@@ -80,28 +80,28 @@ exports.savePhotos=function(req, res) {
     //mkdirp comes from express dependencies
     var fs = require('fs'),
         fsExtra = require('fs-extra'),
-        imageMetadataApi = require('../util/image_metadata_api.js'), 
+        imageMetadataApi = require('../util/image_metadata_api.js'),
         mkdirp=require('mkdirp'),
         util=require('util'),
         path=require('path'),
         async = require('async'),
         exiv2 = require('exiv2');
-    
+
     var data=req.body;
     var targetDirectory=data.targetDirectory;
     delete(data.targetDirectory);
     var files=[];
-    
+
     for (var key in data){
         var item=data[key];
         var parts=item.split('#');
         files.push({sourcePath:key,newTime:parts[1], order:parseInt(parts[0],10)});
     }
-    
+
     files.sort(function(a, b) {
         return a.order - b.order;
     });
-    
+
     //quick and dirty zeropad
     var zeropad=function(num,padding){
         return ('00000000000000'+num).slice(-padding);
@@ -109,7 +109,7 @@ exports.savePhotos=function(req, res) {
 
     var processFiles=function(){
         var warnings=[];
-        
+
         async.filter(files,function(it,callback){path.exists(it.sourcePath,callback);},function(results){
             //synchronous copy the files
             var l=results.length.toString().length;
@@ -117,17 +117,17 @@ exports.savePhotos=function(req, res) {
                 item.order=index+1;
             });
             async.forEachSeries(results,function(item,callback){
-                var destPath=path.join(targetDirectory,["photo_",zeropad(item.order,l),".jpg"].join(''));
-                
+                var destPath=path.join(targetDirectory,["poland_2014_05_",zeropad(item.order,l),".jpg"].join(''));
+
                 var writeTags=function(destFilePath,item,callback){
                     var d=item.newTime;
-                    
+
                     if (!path.existsSync(destFilePath)){
                         warnings.push(util.format('File to update metaata does not exist (%s)',destFilePath));
                         callback();
                         return;
                     }
-                    
+
                     var tags={
                             "Exif.Image.DateTime":d,
                             "Exif.Photo.DateTimeDigitized":d,
@@ -140,7 +140,7 @@ exports.savePhotos=function(req, res) {
                         callback();
                     });
                 };
-                
+
                 var copyCallback = function(err){
                     if (err) {
                         console.log(util.format('Error copying file "%s"',destPath));
@@ -151,34 +151,34 @@ exports.savePhotos=function(req, res) {
                           writeTags(destPath,item,callback);
                       }
                 };
-                
-                
+
+
                 if (!path.existsSync(destPath)){
                     fsExtra.copy(item.sourcePath, destPath,copyCallback);
                 }
             },function(err){
-                    res.json({
+                    res.json(200, {
                         message: util.format('Error creating folder "%s"',targetDirectory),
                         warnings:warnings,
                         error : err
-                    }, 200);
+                    });
             });
         });
     };
-    
-    
+
+
     mkdirp(targetDirectory,function(err){
         if (err){
-            res.json({
+            res.json(200, {
                 message: util.format('Error creating folder "%s"',targetDirectory),
                 error : err
-            }, 500);
+            });
         }else{
             processFiles();
         }
     });
-    
-    
-    
-    
+
+
+
+
 }

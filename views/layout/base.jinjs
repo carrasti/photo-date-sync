@@ -1,4 +1,4 @@
-{% extends "html.jinjs" %}
+{% extends "layout/html.jinjs" %}
 
 {% block header_title %}Photo date sync{% endblock %}
 
@@ -15,7 +15,7 @@
     <div class="tagline">putting your friends pictures together</div>
     {% endblock %}
     </div>
-    
+
     <div class="tools">
         {% block page_header_tools %}
         <ul>
